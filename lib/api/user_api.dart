@@ -14,8 +14,12 @@ class UserApi{
     return HttpManager.getInstance().post("/api/user/register", params);
   }
 
-  static getUserInfo(){
-    return HttpManager.getInstance().get("/api/user/info",null);
+  static getUserInfo(String username){
+    var params = new Map<String,String>();
+    params["username"] = username;
+    return HttpManager.getInstance().get("/api/user/info",params);
   }
+
+
 
 }

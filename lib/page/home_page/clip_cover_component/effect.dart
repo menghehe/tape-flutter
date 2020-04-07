@@ -5,14 +5,15 @@ import 'state.dart';
 
 Effect<ClipCoverState> buildEffect() {
   return combineEffects(<Object, Effect<ClipCoverState>>{
-    ClipCoverAction.action: _onAction,
+    ClipCoverAction.tapUserAvatar: _onTapUserAvatar,
     ClipCoverAction.tapPlayer: _onTapPlayer,
   });
 }
 
-void _onAction(Action action, Context<ClipCoverState> ctx) {
+void _onTapUserAvatar(Action action, Context<ClipCoverState> ctx) {
+  Navigator.of(ctx.context).pushNamed("profile",arguments: {"profileUser":ctx.state.clip.user});
 }
 
 void _onTapPlayer(Action action, Context<ClipCoverState> ctx){
-  Navigator.of(ctx.context).pushNamed("player",arguments: {"clip":ctx.state.clip,"vc":ctx.state.videoPlayerController});
+  Navigator.of(ctx.context).pushNamed("player",arguments: {"clip":ctx.state.clip});
 }

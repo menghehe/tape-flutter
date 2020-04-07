@@ -1,9 +1,7 @@
-import 'dart:io';
-
 import 'package:chewie/chewie.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart' hide Action;
-import 'package:video_player/video_player.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'action.dart';
 import 'state.dart';
@@ -11,23 +9,26 @@ import 'state.dart';
 Reducer<CreationState> buildReducer() {
   return asReducer(
     <Object, Reducer<CreationState>>{
-      CreationAction.action: _onAction,
+      CreationAction.removePreview: _onRemovePreview,
       CreationAction.pickComplete:_onPickComplete,
+      CreationAction.postSuccess:_onPostSuccess,
+      CreationAction.postFailure:_onPostFailure,
     },
   );
 }
 
-CreationState _onAction(CreationState state, Action action) {
+CreationState _onRemovePreview(CreationState state, Action action) {
   final CreationState newState = state.clone();
+  newState.videoFile = null;
   return newState;
 }
 
 CreationState _onPickComplete(CreationState state, Action action) {
   final CreationState newState = state.clone();
-  newState.videoFile = action.payload;
-  newState.videoPlayerController = VideoPlayerController.file(newState.videoFile);
+  newState.videoPlayerController = action.payload;
   newState.chewieController = ChewieController(
     videoPlayerController: newState.videoPlayerController,
+    aspectRatio: newState.videoPlayerController.value.aspectRatio,
     autoPlay: true,
     looping: false,
     showControls: true,
@@ -41,6 +42,22 @@ CreationState _onPickComplete(CreationState state, Action action) {
       color: Colors.grey,
     ),
   );
+  return newState;
+}
+
+CreationState _onPostSuccess(CreationState state, Action action) {
+  state.progressDialog.hide();
+  final CreationState newState = state.clone();
+  newState.videoFile = null;
+  newState.titleEditingController.text = null;
+  Fluttertoast.showToast(msg: "发布成功");
+  return newState;
+}
+
+CreationState _onPostFailure(CreationState state, Action action) {
+  state.progressDialog.hide();
+  final CreationState newState = state.clone();
+  Fluttertoast.showToast(msg: "发布失败");
   return newState;
 }
 

@@ -3,19 +3,16 @@ import 'dart:ui';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:tape/global_store/state.dart';
 import 'package:tape/models/user.dart';
 import 'package:tape/page/home_page/clip_cover_component/state.dart';
 
-class HomeState implements Cloneable<HomeState> ,GlobalBaseState,MutableSource{
+class HomeState implements Cloneable<HomeState> ,MutableSource{
 
   @override
   HomeState clone() {
     return HomeState()
     ..refreshController = refreshController
-    ..clipCoverStateList =clipCoverStateList
-        ..user = user
-        ..themeData = themeData;
+    ..clipCoverStateList =clipCoverStateList;
   }
 
 
@@ -49,15 +46,6 @@ class HomeState implements Cloneable<HomeState> ,GlobalBaseState,MutableSource{
 
 
   RefreshController refreshController;
-
-  @override
-  Color themeColor;
-
-  @override
-  ThemeData themeData;
-
-  @override
-  User user;
 
 
 }

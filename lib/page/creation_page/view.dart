@@ -1,39 +1,71 @@
 import 'package:chewie/chewie.dart';
 import 'package:fish_redux/fish_redux.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:tape/customer_widgets/video_player_item.dart';
 import 'package:tape/page/creation_page/action.dart';
+import 'package:tape/utils/adapt.dart';
 import 'package:video_player/video_player.dart';
 
 import 'state.dart';
 
 Widget buildView(
     CreationState state, Dispatch dispatch, ViewService viewService) {
-   Widget _previewVideo() {
-     if (state.chewieController == null) {
+  SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top, SystemUiOverlay.bottom]);
+  Widget _previewVideo() {
+     if (state.videoFile==null||state.videoPlayerController.value.initialized==false) {
        return const Text(
-         'You have not yet picked a video',
+         '从相册选择或拍摄',
          textAlign: TextAlign.center,
        );
      }
-//     return const Text(
-//       'You have  yet picked a video',
-//       textAlign: TextAlign.center,
-//     );
-     return Padding(
-       padding: const EdgeInsets.all(10.0),
-       child:AspectRatioVideo(
-         state.videoPlayerController
-       )
+     return  Chewie(
+      controller: state.chewieController,
      );
    }
 
     return Scaffold(
-    body: Center(
-      child: _previewVideo(),
-    ),
+
+      appBar: PreferredSize(
+          child: AppBar(
+            title: Text('创作'),
+            automaticallyImplyLeading: false,
+            actions: <Widget>[
+              FlatButton(
+                textColor: Colors.white,
+                onPressed:()=> dispatch(CreationActionCreator.onPostClip()),
+                child: Icon(Icons.send),
+                shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
+              ),
+            ],
+          ),
+          preferredSize: Size.fromHeight(Adapt.screenH() * 0.06)
+      ),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(10),
+        child: Column(
+          children: <Widget>[
+            TextField(
+              controller: state.titleEditingController,
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                filled: true,
+                fillColor: Colors.green.withAlpha(30),
+                hintText: '标题',
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Padding(
+              padding: EdgeInsets.only(bottom: 30),
+              child: _previewVideo(),
+            )
+          ],
+        ),
+      ),
     floatingActionButton: _buildSpeedDial(state, dispatch),
   );
 
@@ -69,12 +101,18 @@ Widget _buildSpeedDial(CreationState state, Dispatch dispatch) {
         SpeedDialChild(
             child: Icon(Icons.video_library),
             backgroundColor: Colors.red,
-          onTap: () => dispatch(CreationActionCreator.onImageButtonPressed(ImageSource.gallery)),
+            onTap: (){
+              dispatch(CreationActionCreator.onRemovePreview());
+              dispatch(CreationActionCreator.onImageButtonPressed(ImageSource.gallery));
+            },
         ),
         SpeedDialChild(
           child: Icon(Icons.videocam),
           backgroundColor: Colors.blue,
-          onTap: () => dispatch(CreationActionCreator.onImageButtonPressed(ImageSource.camera)),
+          onTap: (){
+            dispatch(CreationActionCreator.onRemovePreview());
+            dispatch(CreationActionCreator.onImageButtonPressed(ImageSource.camera));
+          },
         ),
         SpeedDialChild(
           child: Icon(Icons.keyboard_voice),
@@ -86,53 +124,4 @@ Widget _buildSpeedDial(CreationState state, Dispatch dispatch) {
   );
 }
 
-class AspectRatioVideo extends StatefulWidget {
-  AspectRatioVideo(this.controller);
-
-  final VideoPlayerController controller;
-
-  @override
-  AspectRatioVideoState createState() => AspectRatioVideoState();
-}
-
-class AspectRatioVideoState extends State<AspectRatioVideo> {
-  VideoPlayerController get controller => widget.controller;
-  bool initialized = false;
-
-  void _onVideoControllerUpdate() {
-    if (!mounted) {
-      return;
-    }
-    if (initialized != controller.value.initialized) {
-      initialized = controller.value.initialized;
-      setState(() {});
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    controller.addListener(_onVideoControllerUpdate);
-  }
-
-  @override
-  void dispose() {
-    controller.removeListener(_onVideoControllerUpdate);
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (initialized) {
-      return Center(
-        child: AspectRatio(
-          aspectRatio: controller.value?.aspectRatio,
-          child: VideoPlayer(controller),
-        ),
-      );
-    } else {
-      return Container();
-    }
-  }
-}
 

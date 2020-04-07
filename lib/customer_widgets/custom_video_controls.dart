@@ -5,8 +5,10 @@ import 'dart:ui' as ui;
 import 'package:chewie/chewie.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:open_iconic_flutter/open_iconic_flutter.dart';
 import 'package:tape/customer_widgets/service_discovery.dart';
+import 'package:tape/utils/adapt.dart';
 import 'package:video_player/video_player.dart';
 
 import 'cupertino_progress_bar.dart';
@@ -140,7 +142,7 @@ class _CupertinoControlsState extends State<CustomCupertinoControls> {
               sigmaY: 10.0,
             ),
             child: Container(
-              height: barHeight,
+              height: Adapt.px(40),
               color: backgroundColor,
               child: chewieController.isLive
                   ? Row(
@@ -152,9 +154,9 @@ class _CupertinoControlsState extends State<CustomCupertinoControls> {
                     )
                   : Row(
                       children: <Widget>[
-                        _buildSkipBack(iconColor, barHeight),
+//                        _buildSkipBack(iconColor, barHeight),
                         _buildPlayPause(controller, iconColor, barHeight),
-                        _buildSkipForward(iconColor, barHeight),
+//                        _buildSkipForward(iconColor, barHeight),
                         _buildPosition(iconColor),
                         _buildProgressBar(),
                         _buildRemaining(iconColor),
@@ -205,8 +207,8 @@ class _CupertinoControlsState extends State<CustomCupertinoControls> {
               child: Center(
                 child: Icon(
                   chewieController.isFullScreen
-                      ? OpenIconicIcons.fullscreenExit
-                      : OpenIconicIcons.fullscreenEnter,
+                      ? LineIcons.expand
+                      : LineIcons.expand,
                   color: iconColor,
                   size: 12.0,
                 ),
@@ -254,8 +256,8 @@ class _CupertinoControlsState extends State<CustomCupertinoControls> {
         ),
         child: Icon(
           controller.value.isPlaying
-              ? OpenIconicIcons.mediaPause
-              : OpenIconicIcons.mediaPlay,
+              ? LineIcons.pause
+              : LineIcons.play,
           color: iconColor,
           size: 16.0,
         ),
@@ -285,7 +287,7 @@ class _CupertinoControlsState extends State<CustomCupertinoControls> {
         : Duration(seconds: 0);
 
     return Padding(
-      padding: EdgeInsets.only(right: 12.0),
+      padding: EdgeInsets.only(right: 0),
       child: Text(
         '-${formatDuration(position)}',
         style: TextStyle(color: iconColor, fontSize: 12.0),
@@ -468,7 +470,7 @@ class _CupertinoControlsState extends State<CustomCupertinoControls> {
   }
 
   void _startHideTimer() {
-    _hideTimer = Timer(const Duration(seconds: 3), () {
+    _hideTimer = Timer(const Duration(seconds: 2), () {
       setState(() {
         _hideStuff = true;
       });

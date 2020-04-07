@@ -8,4 +8,31 @@ class Base{
    int updateMan;
    int current;
    int size;
+   String orders;
+}
+
+@JsonSerializable()
+class BasePage{
+   int total;
+   int size;
+   int current;
+
+}
+
+@JsonSerializable()
+class OrderItem{
+   String column;
+   bool asc;
+
+   @JsonProperty(ignore: true)
+   OrderItem(this.column, this.asc);
+
+}
+@JsonSerializable()
+class OrderItemList{
+   List<OrderItem> data;
+
+   @JsonProperty(ignore: true)
+   OrderItemList(this.data);
+
 }

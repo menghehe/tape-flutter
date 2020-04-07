@@ -87,4 +87,21 @@ class HttpManager{
     return response.data;
   }
 
+
+  ///通用的PUT请求
+  put(url, params, {noTip = false}) async {
+    Response response;
+    try {
+      response = await _dio.put(url, queryParameters: params);
+    } on DioError catch (e) {
+//      return resultError(e);
+    }
+
+    if (response.data is DioError) {
+//      return resultError(response.data['code']);
+    }
+
+    return response.data;
+  }
+
 }

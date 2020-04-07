@@ -1,53 +1,31 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart' hide Action;
-import 'package:tape/page/clip_post_page/page.dart';
-import 'package:tape/page/clip_record_page/page.dart';
+import 'package:tape/page/auth_page/page.dart';
 import 'package:tape/page/creation_page/page.dart';
 import 'package:tape/page/home_page/page.dart';
-import 'package:tape/page/login_page/page.dart';
 import 'package:tape/page/main_page/page.dart';
+import 'package:tape/page/message_page/page.dart';
+import 'package:tape/page/message_page/rec_comment_page/page.dart';
+import 'package:tape/page/mine_page/page.dart';
 import 'package:tape/page/player_page/page.dart';
 import 'package:tape/page/profile_page/page.dart';
-import 'package:tape/utils/storage.dart';
 
-import 'global_store/state.dart';
-import 'global_store/store.dart';
 
-Widget createApp() {
+Widget createApp(String firstPae) {
   final AbstractRoutes routes = PageRoutes(
     pages: <String, Page<Object, dynamic>>{
-      'clipRecord':ClipRecordPage(),
-      'login': LoginPage(),
+      'auth': AuthPage(),
       'main':TabPage(),
       'home':HomePage(),
-      'clipPost':ClipPostPage(),
+      'message':MessagePage(),
+      'creation':CreationPage(),
+      'mine':MinePage(),
       'player':PlayerPage(),
       'profile':ProfilePage(),
-      'creation':CreationPage()
+
+      'recComment':RecCommentPage(),
     },
     visitor: (String path, Page<Object, dynamic> page) {
-      /// 只有特定的范围的 Page 才需要建立和 AppStore 的连接关系
-      /// 满足 Page<T> ，T 是 GlobalBaseState 的子类
-      if (page.isTypeof<GlobalBaseState>()) {
-        /// 建立 AppStore 驱动 PageStore 的单向数据连接
-        /// 1. 参数1 AppStore
-        /// 2. 参数2 当 AppStore.state 变化时, PageStore.state 该如何变化
-        page.connectExtraStore<GlobalState>(GlobalStore.store,
-                (Object pagestate, GlobalState appState) {
-              final GlobalBaseState p = pagestate;
-              if (p.themeColor != appState.themeColor ||p.user!=appState.user||p.themeData!=appState.themeData) {
-                if (pagestate is Cloneable) {
-                  final Object copy = pagestate.clone();
-                  final GlobalBaseState newState = copy;
-                  newState.themeColor = appState.themeColor;
-                  newState.themeData = appState.themeData;
-                  newState.user = appState.user;
-                  return newState;
-                }
-              }
-              return pagestate;
-            });
-      }
       page.enhancer.append(
         /// View AOP
         viewMiddleware: <ViewMiddleware<dynamic>>[
@@ -78,12 +56,12 @@ Widget createApp() {
     theme: _lightTheme,
     darkTheme: _darkTheme,
     debugShowCheckedModeBanner: false,
-    home: routes.buildPage("main", {
+    home: routes.buildPage(firstPae, {
       'pageList':[
         routes.buildPage("home", null),
-        routes.buildPage("clipRecord", null),
+        routes.buildPage("recComment", null),
         routes.buildPage("creation", null),
-        routes.buildPage("profile", null)
+        routes.buildPage("mine", null)
       ]
     }),  //把他作为默认页面
     onGenerateRoute: (RouteSettings settings) {

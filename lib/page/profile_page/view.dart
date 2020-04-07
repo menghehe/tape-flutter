@@ -1,6 +1,7 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:tape/api/request/Address.dart';
@@ -8,120 +9,176 @@ import 'package:tape/api/request/Address.dart';
 import 'action.dart';
 import 'state.dart';
 
-Widget buildView(ProfileState state, Dispatch dispatch, ViewService viewService) {
-  return Scaffold(
-    body: SmartRefresher(
-      controller: state.refreshController,
-      header: MaterialClassicHeader(
-        backgroundColor: Colors.blueAccent,
-        distance: 80.0,
-      ),
-      onRefresh: (){dispatch(ProfileActionCreator.onRefresh());},
-      child: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              SizedBox(height: 40),
-              CircleAvatar(
-                backgroundImage: NetworkImage(
-                    Address.BASE_AVATAR_URL+ state.user.avatar
-                ),
-                radius: 50,
-              ),
-              SizedBox(height: 10),
-              Text(
-                state.user.username,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 22,
-                ),
-              ),
-              SizedBox(height: 3),
+Widget buildView(
+    ProfileState state, Dispatch dispatch, ViewService viewService) {
+  SystemChrome.setEnabledSystemUIOverlays(
+      [SystemUiOverlay.top, SystemUiOverlay.bottom]);
 
-              Text(
-                state.user.signature??'',
-                style: TextStyle(
-                ),
-              ),
-              SizedBox(height: 40),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 50),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Column(
-                      children: <Widget>[
-                        Text(
-                          '20',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 22,
-                          ),
-                        ),
-                        SizedBox(height: 4),
-                        Text(
-                          "Posts",
-                          style: TextStyle(
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    Column(
-                      children: <Widget>[
-                        Text(
-                          '100',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 22,
-                          ),
-                        ),
-                        SizedBox(height: 4),
-                        Text(
-                          "Friends",
-                          style: TextStyle(
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    Column(
-                      children: <Widget>[
-                        Text(
-                          '30',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 22,
-                          ),
-                        ),
-                        SizedBox(height: 4),
-                        Text(
-                          "Groups",
-                          style: TextStyle(
-                          ),
-                        ),
-                      ],
-                    ),
-
-                  ],
-                ),
-              ),
-              SizedBox(height: 20),
-              _buildClipList(state,dispatch)
-            ],
-          ),
+  Widget _buildFriendButton(){
+    if(state.profileUser.friendShipStatus==2){
+      return FlatButton(
+        child: Text(
+            "互相关注"
         ),
+        color: Colors.green,
+        onPressed: () {dispatch(ProfileActionCreator.onTapFriendShip());},
+      );
+    }
+    if(state.profileUser.friendShipStatus==1){
+      return FlatButton(
+        child: Text(
+            "已关注"
+        ),
+        color: Colors.green,
+        onPressed: () {dispatch(ProfileActionCreator.onTapFriendShip());},
+      );
+    }
+    return FlatButton(
+      child: Text(
+        "关注"
       ),
-    ),
+      color: Colors.green,
+      onPressed: () {dispatch(ProfileActionCreator.onTapFriendShip());},
+    );
+  }
+
+  Widget _buildMessageBox(){
+    if(state.profileUser.friendShipStatus==-1){
+      return SizedBox(height: 0,);
+    }else{
+      return Row(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          FlatButton(
+            child: Icon(
+              Icons.message,
+              color: Colors.white,
+            ),
+            color: Colors.grey,
+            onPressed: () {},
+          ),
+          SizedBox(width: 10),
+          _buildFriendButton()
+        ],
+      );
+    }
+  }
+
+
+  return Scaffold(
+    body: NestedScrollView(
+        controller: state.scrollController,
+        headerSliverBuilder: (c, s) => [
+              SliverAppBar(
+                backgroundColor: Colors.white,
+                expandedHeight: 300.0,
+                pinned: false,
+                flexibleSpace: FlexibleSpaceBar(
+                    centerTitle: true,
+                    background: Column(
+                      children: <Widget>[
+                        SizedBox(height: 40),
+                        CircleAvatar(
+                          backgroundImage: NetworkImage(
+                              Address.BASE_AVATAR_URL +
+                                  state.profileUser.avatar),
+                          radius: 50,
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          state.profileUser.username,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 22,
+                          ),
+                        ),
+                        SizedBox(height: 3),
+                        Text(
+                          state.profileUser.signature ?? '签名...',
+                          style: TextStyle(),
+                        ),
+                        SizedBox(height: 20),
+                        _buildMessageBox(),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 50),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Column(
+                                children: <Widget>[
+                                  Text(
+                                    state.profileUser.clipCount.toString(),
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 22,
+                                    ),
+                                  ),
+                                  SizedBox(height: 4),
+                                  Text(
+                                    "视频",
+                                    style: TextStyle(),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: <Widget>[
+                                  Text(
+                                    state.profileUser.followingCount.toString(),
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 22,
+                                    ),
+                                  ),
+                                  SizedBox(height: 4),
+                                  Text(
+                                    "关注",
+                                    style: TextStyle(),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: <Widget>[
+                                  Text(
+                                    state.profileUser.followerCount.toString(),
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 22,
+                                    ),
+                                  ),
+                                  SizedBox(height: 4),
+                                  Text(
+                                    "粉丝",
+                                    style: TextStyle(),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    )),
+              ),
+            ],
+        body: Container(
+          child: SmartRefresher(
+              controller: state.refreshController,
+              enablePullDown: true,
+              header: WaterDropHeader(),
+              enablePullUp: true,
+              onRefresh: () {
+                dispatch(ProfileActionCreator.onRefresh());
+              },
+              onLoading: () {
+                dispatch(ProfileActionCreator.onRefresh());
+              },
+              child: _buildClipList(state, dispatch)),
+        )),
   );
 }
 
-Widget _buildClipList(ProfileState state, dispatch){
-  if(state.clipList.length==0){
-   return Container();
+Widget _buildClipList(ProfileState state, dispatch) {
+  if (state.clipList.length == 0) {
+    return Container();
   }
   return new StaggeredGridView.countBuilder(
     shrinkWrap: true,
@@ -129,20 +186,21 @@ Widget _buildClipList(ProfileState state, dispatch){
     itemCount: state.clipList.length,
     itemBuilder: (BuildContext context, int index) {
       return Padding(
-        padding: EdgeInsets.all(5.0),
-        child: InkWell(
-          child: Image.network(
-            Address.BASE_COVER_URL+ state.clipList[index].thumbnail,
-            fit: BoxFit.cover,
-          ),
-          onTap: (){dispatch(ProfileActionCreator.onTapClipCover(state.clipList[index]));},
-        )
-      );
+          padding: EdgeInsets.all(5.0),
+          child: InkWell(
+            child: Image.network(
+              Address.BASE_COVER_URL + state.clipList[index].coverPath,
+              fit: BoxFit.cover,
+            ),
+            onTap: () {
+              dispatch(
+                  ProfileActionCreator.onTapClipCover(state.clipList[index]));
+            },
+          ));
     },
     staggeredTileBuilder: (int index) =>
-    new StaggeredTile.count(2, index.isEven ? 2 : 1),
+        new StaggeredTile.count(2, index.isEven ? 2 : 1),
     mainAxisSpacing: 4.0,
     crossAxisSpacing: 4.0,
   );
-
 }
