@@ -2,6 +2,7 @@ import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart' hide Action;
 import 'package:tape/page/auth_page/page.dart';
 import 'package:tape/page/creation_page/page.dart';
+import 'package:tape/page/example/page.dart';
 import 'package:tape/page/home_page/page.dart';
 import 'package:tape/page/main_page/page.dart';
 import 'package:tape/page/message_page/page.dart';
@@ -24,6 +25,7 @@ Widget createApp(String firstPae) {
       'profile':ProfilePage(),
 
       'recComment':RecCommentPage(),
+      'example':ExamplePage(),
     },
     visitor: (String path, Page<Object, dynamic> page) {
       page.enhancer.append(
@@ -59,7 +61,7 @@ Widget createApp(String firstPae) {
     home: routes.buildPage(firstPae, {
       'pageList':[
         routes.buildPage("home", null),
-        routes.buildPage("message", null),
+        routes.buildPage("example", null),
         routes.buildPage("creation", null),
         routes.buildPage("mine", null)
       ]

@@ -10,6 +10,5 @@ Effect<MessageState> buildEffect() {
 }
 
 void _onInit(Action action, Context<MessageState> ctx) {
-  final TickerProvider tickerProvider = ctx.stfState as TickerProvider;
-  ctx.state.tabController = TabController(length: 3, vsync: tickerProvider);
+  ctx.state.tabController = TabController(length: 2, vsync: (ctx.stfState as TickerProvider));
 }
