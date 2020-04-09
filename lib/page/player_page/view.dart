@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +18,7 @@ import 'state.dart';
 Widget buildView(
     PlayerState state, Dispatch dispatch, ViewService viewService) {
   SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
+
   if (state.clip == null) {
     return Scaffold(
       body: Container(
@@ -105,7 +104,9 @@ Widget buildView(
                             Container(
                               width: Adapt.px(40),
                               child: IconButton(
-                                color: comment.liked? Colors.red[400] : Colors.grey[400],
+                                color: comment.liked
+                                    ? Colors.red[400]
+                                    : Colors.grey[400],
                                 padding: EdgeInsets.all(2),
                                 alignment: Alignment.centerRight,
                                 icon: Icon(LineIcons.thumbs_o_up),
@@ -132,7 +133,6 @@ Widget buildView(
 
   return Scaffold(
       body: Container(
-//        padding: EdgeInsets.only(top: 0),
     child: Container(
       color: Colors.white,
       child: Stack(
@@ -191,7 +191,9 @@ Widget buildView(
                               IconButton(
                                 icon: Icon(
                                   LineIcons.thumbs_o_up,
-                                  color: state.clip.liked==true?Colors.red:Colors.grey[600],
+                                  color: state.clip.liked == true
+                                      ? Colors.red
+                                      : Colors.grey[600],
                                   size: Adapt.px(55),
                                 ),
                                 onPressed: () {
@@ -353,6 +355,7 @@ Widget buildView(
                 color: Colors.white.withOpacity(0.9),
                 padding: EdgeInsets.only(left: 10),
                 child: TextField(
+                  focusNode: state.commentFocusNode,
                   controller: state.commentEditController,
                   decoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(

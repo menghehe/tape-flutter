@@ -14,6 +14,8 @@ class PlayerState implements Cloneable<PlayerState>{
   ScrollController scrollController = ScrollController();
   List<Comment> commentList = List();
   TextEditingController commentEditController = TextEditingController();
+  FocusNode commentFocusNode = FocusNode();
+
 
   @override
   PlayerState clone() {
@@ -22,7 +24,8 @@ class PlayerState implements Cloneable<PlayerState>{
         ..clip = clip
         ..clipId = clipId
         ..commentEditController = commentEditController
-        ..commentList = commentList;
+        ..commentList = commentList
+        ..commentFocusNode = commentFocusNode;
   }
 
 }

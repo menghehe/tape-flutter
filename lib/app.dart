@@ -59,7 +59,7 @@ Widget createApp(String firstPae) {
     home: routes.buildPage(firstPae, {
       'pageList':[
         routes.buildPage("home", null),
-        routes.buildPage("recComment", null),
+        routes.buildPage("message", null),
         routes.buildPage("creation", null),
         routes.buildPage("mine", null)
       ]

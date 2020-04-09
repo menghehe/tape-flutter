@@ -30,18 +30,19 @@ Widget buildView(
 
       appBar: PreferredSize(
           child: AppBar(
-            title: Text('创作'),
+            title: Text('创作',style: TextStyle(color: Colors.black),),
             automaticallyImplyLeading: false,
+            backgroundColor: Colors.white,
             actions: <Widget>[
               FlatButton(
-                textColor: Colors.white,
+                textColor: Colors.black,
                 onPressed:()=> dispatch(CreationActionCreator.onPostClip()),
                 child: Icon(Icons.send),
                 shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
               ),
             ],
           ),
-          preferredSize: Size.fromHeight(Adapt.screenH() * 0.06)
+          preferredSize: Size.fromHeight(Adapt.screenH() * 0.07)
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(10),

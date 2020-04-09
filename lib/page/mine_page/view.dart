@@ -6,6 +6,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:tape/api/request/Address.dart';
+import 'package:tape/models/user.dart';
 
 import 'action.dart';
 import 'state.dart';
@@ -13,6 +14,17 @@ import 'state.dart';
 Widget buildView(MineState state, Dispatch dispatch, ViewService viewService) {
   SystemChrome.setEnabledSystemUIOverlays(
       [SystemUiOverlay.top, SystemUiOverlay.bottom]);
+
+  User nullUser = new User();
+  nullUser.username = 'username';
+  nullUser.signature = 'signature';
+  nullUser.avatar = 'default.jpg';
+  nullUser.clipCount = 0;
+  nullUser.followerCount = 0;
+  nullUser.followingCount = 0;
+
+  User user = state.user ?? nullUser;
+
   return NestedScrollView(
       controller: state.scrollController,
       headerSliverBuilder: (c, s) => [
@@ -28,19 +40,16 @@ Widget buildView(MineState state, Dispatch dispatch, ViewService viewService) {
                       Stack(
                         children: <Widget>[
                           Align(
-                            alignment: Alignment.topRight,
-                            child: InkWell(
-                              child: Icon(
-                                  LineIcons.sign_out
-                              ),
-                              onTap: ()=>{dispatch(MineActionCreator.onLogout())},
-                            )
-                          ),
+                              alignment: Alignment.topRight,
+                              child: InkWell(
+                                child: Icon(LineIcons.sign_out),
+                                onTap: () =>
+                                    {dispatch(MineActionCreator.onLogout())},
+                              )),
                           Center(
                             child: CircleAvatar(
                               backgroundImage: NetworkImage(
-                                  state.user==null?'':Address.BASE_AVATAR_URL + state.user.avatar
-                              ),
+                                  Address.BASE_AVATAR_URL +user.avatar),
                               radius: 50,
                             ),
                           )
@@ -48,7 +57,7 @@ Widget buildView(MineState state, Dispatch dispatch, ViewService viewService) {
                       ),
                       SizedBox(height: 10),
                       Text(
-                        state.user.username ?? '',
+                        user.username,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 22,
@@ -56,7 +65,7 @@ Widget buildView(MineState state, Dispatch dispatch, ViewService viewService) {
                       ),
                       SizedBox(height: 3),
                       Text(
-                        state.user.signature ?? '',
+                        user.signature ?? '',
                         style: TextStyle(),
                       ),
                       SizedBox(height: 20),
@@ -68,7 +77,7 @@ Widget buildView(MineState state, Dispatch dispatch, ViewService viewService) {
                             Column(
                               children: <Widget>[
                                 Text(
-                                  state.user.clipCount.toString(),
+                                  user.clipCount.toString(),
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 22,
@@ -84,7 +93,7 @@ Widget buildView(MineState state, Dispatch dispatch, ViewService viewService) {
                             Column(
                               children: <Widget>[
                                 Text(
-                                  state.user.followingCount.toString(),
+                                  user.followingCount.toString(),
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 22,
@@ -100,7 +109,7 @@ Widget buildView(MineState state, Dispatch dispatch, ViewService viewService) {
                             Column(
                               children: <Widget>[
                                 Text(
-                                  state.user.followerCount.toString(),
+                                  user.followerCount.toString(),
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 22,

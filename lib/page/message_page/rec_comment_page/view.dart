@@ -1,6 +1,8 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
+import 'package:loading/indicator/ball_pulse_indicator.dart';
+import 'package:loading/loading.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:tape/api/request/Address.dart';
 import 'package:tape/models/comment.dart';
@@ -13,7 +15,9 @@ Widget buildView(RecCommentState state, Dispatch dispatch, ViewService viewServi
 
   Widget buildComment(){
     if(state.commentList==null){
-      return Text('还没有收到过评论');
+      return Center(
+        child: Loading(indicator: BallPulseIndicator(), size: 100.0,color: Colors.green),
+      );
     }
     return ListView.separated(
       padding: EdgeInsets.all(10),

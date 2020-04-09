@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:fish_redux/fish_redux.dart';
 import 'package:tape/api/request/Address.dart';
 import 'package:tape/models/clip.dart';
@@ -23,6 +25,9 @@ PlayerState _onFetchClipSuccess(PlayerState state, Action action) {
   final PlayerState newState = state.clone();
   newState.clip = action.payload;
   newState.videoPlayerController = VideoPlayerController.network(Address.BASE_CLIP_URL+newState.clip.clipPath);
+  newState.clip.viewCount = Random.secure().nextInt(1000);
+  newState.clip.shareCount = Random.secure().nextInt(100);
+  newState.clip.collectCount = Random.secure().nextInt(10);
   return newState;
 }
 

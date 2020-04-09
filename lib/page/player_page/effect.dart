@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:dart_json_mapper/dart_json_mapper.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/services.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:tape/api/clip_api.dart';
 import 'package:tape/api/comment_api.dart';
 import 'package:tape/api/like_api.dart';
@@ -32,6 +33,7 @@ void _init(Action action, Context<PlayerState> ctx){
   ctx.state.clip.collectCount = Random.secure().nextInt(10);
   ctx.dispatch(PlayerActionCreator.onFetchComment());
 }
+
 
 
 void _dispose(Action action, Context<PlayerState> ctx){
@@ -76,6 +78,9 @@ void _onAddComment(Action action,Context<PlayerState> ctx){
   if(ctx.state.commentEditController.text.length==0){
     return;
   }
+  ProgressDialog progressDialog = ProgressDialog(ctx.context,type: ProgressDialogType.Normal, isDismissible: true, showLogs: true);
+  progressDialog.show();
+
   Comment comment = Comment();
   comment.clipId = ctx.state.clip.id;
   comment.text = ctx.state.commentEditController.text;
@@ -86,6 +91,12 @@ void _onAddComment(Action action,Context<PlayerState> ctx){
     if(result.isSuccess){
       ctx.state.commentEditController.text=null;
       ctx.dispatch(PlayerActionCreator.onFetchComment());
+      progressDialog.dismiss();
+      ctx.state.commentEditController.clear();
+      ctx.state.commentFocusNode.unfocus();
+    }else{
+      progressDialog.dismiss();
+
     }
   });
 

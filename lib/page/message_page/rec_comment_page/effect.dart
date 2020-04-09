@@ -8,10 +8,15 @@ import 'state.dart';
 
 Effect<RecCommentState> buildEffect() {
   return combineEffects(<Object, Effect<RecCommentState>>{
+    Lifecycle.initState:_onInit,
     RecCommentAction.fetchComment: _onFetchComment,
     RecCommentAction.tapComment:_onTapComment,
     RecCommentAction.tapAvatar:_onTapAvatar,
   });
+}
+
+void _onInit(Action action, Context<RecCommentState> ctx){
+  ctx.dispatch(RecCommentActionCreator.onFetchComment());
 }
 
 void _onFetchComment(Action action, Context<RecCommentState> ctx) {
