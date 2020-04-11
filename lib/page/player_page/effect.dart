@@ -67,7 +67,7 @@ void _onFetchComment(Action action,Context<PlayerState> ctx){
             typeOf<List<Comment>>(): (value) => value.cast<Comment>(),
           })
       );
-      CommentPage commentPage = CommentPage();
+      LikePage commentPage = LikePage();
       commentPage = JsonMapper.fromMap(result.data);
       ctx.dispatch(PlayerActionCreator.onFetchSuccess(commentPage));
     }

@@ -43,13 +43,6 @@ packages:
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
     source: hosted
     version: "1.0.5"
-  bottom_navy_bar:
-    dependency: "direct main"
-    description:
-      name: bottom_navy_bar
-      url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
-    source: hosted
-    version: "5.4.0"
   build:
     dependency: transitive
     description:
@@ -690,13 +683,6 @@ packages:
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
     source: hosted
     version: "0.2.3"
-  shifting_tabbar:
-    dependency: "direct main"
-    description:
-      name: shifting_tabbar
-      url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub/"
-    source: hosted
-    version: "0.3.1"
   shimmer:
     dependency: "direct main"
     description:

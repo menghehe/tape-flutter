@@ -8,7 +8,7 @@ class Base{
    int updateMan;
    int current;
    int size;
-   String orders;
+   List<OrderItem> orders;
 }
 
 @JsonSerializable()

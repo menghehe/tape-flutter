@@ -12,27 +12,12 @@ Widget buildView(HomeState state, Dispatch dispatch, ViewService viewService) {
   return Scaffold(
     appBar: PreferredSize(
         child: AppBar(
-          backgroundColor: Colors.white,
-          title: Padding(
-            padding: EdgeInsets.only(left: 10),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                DropdownButton<String>(
-                  value: '推荐',
-                  underline: SizedBox(),
-                  icon: SizedBox(),
-                  items: <DropdownMenuItem<String>>[
-                    DropdownMenuItem(child: Text('推荐'), value: '推荐'),
-                    DropdownMenuItem(child: Text('关注'), value: '关注'),
-                    DropdownMenuItem(child: Text('好友'), value: '好友'),
-                  ],
-                  onChanged: (String value) {},
-                ),
-              ],
-            ),
+          title: Text(
+            '推荐',
+            style: TextStyle(color: Colors.black),
           ),
           automaticallyImplyLeading: false,
+          backgroundColor: Colors.white,
         ),
         preferredSize: Size.fromHeight(Adapt.screenH() * 0.07)),
     body: Container(

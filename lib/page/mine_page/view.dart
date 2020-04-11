@@ -49,7 +49,7 @@ Widget buildView(MineState state, Dispatch dispatch, ViewService viewService) {
                           Center(
                             child: CircleAvatar(
                               backgroundImage: NetworkImage(
-                                  Address.BASE_AVATAR_URL +user.avatar),
+                                  Address.BASE_AVATAR_URL + user.avatar),
                               radius: 50,
                             ),
                           )
@@ -90,38 +90,48 @@ Widget buildView(MineState state, Dispatch dispatch, ViewService viewService) {
                                 ),
                               ],
                             ),
-                            Column(
-                              children: <Widget>[
-                                Text(
-                                  user.followingCount.toString(),
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 22,
+                            InkWell(
+                              onTap: () {
+                                dispatch(MineActionCreator.onTapFollowing());
+                              },
+                              child: Column(
+                                children: <Widget>[
+                                  Text(
+                                    user.followingCount.toString(),
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 22,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(height: 4),
-                                Text(
-                                  "关注",
-                                  style: TextStyle(),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              children: <Widget>[
-                                Text(
-                                  user.followerCount.toString(),
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 22,
+                                  SizedBox(height: 4),
+                                  Text(
+                                    "关注",
+                                    style: TextStyle(),
                                   ),
-                                ),
-                                SizedBox(height: 4),
-                                Text(
-                                  "粉丝",
-                                  style: TextStyle(),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
+                            InkWell(
+                              onTap: () {
+                                dispatch(MineActionCreator.onTapFollower());
+                              },
+                              child: Column(
+                                children: <Widget>[
+                                  Text(
+                                    user.followerCount.toString(),
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 22,
+                                    ),
+                                  ),
+                                  SizedBox(height: 4),
+                                  Text(
+                                    "粉丝",
+                                    style: TextStyle(),
+                                  ),
+                                ],
+                              ),
+                            )
                           ],
                         ),
                       ),

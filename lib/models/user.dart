@@ -7,8 +7,6 @@ class User extends Base {
   String username;
   String password;
   String nickname;
-  String phone;
-  String email;
   String avatar;
   String signature;
   String registrationId;

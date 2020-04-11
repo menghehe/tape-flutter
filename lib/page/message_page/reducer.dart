@@ -6,12 +6,14 @@ import 'state.dart';
 Reducer<MessageState> buildReducer() {
   return asReducer(
     <Object, Reducer<MessageState>>{
-      MessageAction.action: _onAction,
     },
   );
 }
 
-MessageState _onAction(MessageState state, Action action) {
-  final MessageState newState = state.clone();
-  return newState;
+MessageState _modify(MessageState state, Action action) {
+  final modifyFunc=action.payload as void Function(MessageState clone);
+  final clone = state.clone();
+  modifyFunc(clone);
+  assert(state.hashCode != clone.hashCode); //不能是相同的对象
+  return clone;
 }

@@ -22,16 +22,16 @@ class ClipApi{
     List<OrderItem> orderList = List();
     orderList.add(orderItem);
     Clip clip = Clip();
-    clip.orders = JsonMapper.toJson(orderList);
+    clip.orders = orderList;
     Map params = JsonMapper.toMap(clip,SerializationOptions(ignoreNullMembers: true));
-    return HttpManager.getInstance().get("/api/clip/recommend", params);
+    return HttpManager.getInstance().post("/api/clip/recommend", params);
   }
 
   static getClip(Clip clip) async {
     OrderItem orderItem = OrderItem("create_time", false);
     List<OrderItem> orderList = List();
     orderList.add(orderItem);
-    clip.orders = JsonMapper.toJson(orderList);
+    clip.orders = orderList;
     return HttpManager.getInstance().get("/api/clip/get", JsonMapper.toMap(clip,SerializationOptions(ignoreNullMembers: true)));
   }
 

@@ -5,6 +5,8 @@ import 'package:tape/utils/storage.dart';
 
 import 'main.reflectable.dart' show initializeReflectable;
 import 'models/comment.dart';
+import 'models/like.dart';
+import 'models/user.dart';
 
 
 void main() {
@@ -13,6 +15,8 @@ void main() {
   JsonMapper().useAdapter(JsonMapperAdapter(
       valueDecorators: {
         typeOf<List<Comment>>(): (value) => value.cast<Comment>(),
+        typeOf<List<Like>>(): (value) => value.cast<Like>(),
+        typeOf<List<User>>(): (value) => value.cast<User>(),
       })
   );
   Future<String> future = Storage.getString("token");

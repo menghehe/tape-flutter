@@ -1,10 +1,9 @@
 import 'package:fish_redux/fish_redux.dart';
+import 'state.dart';
 
-//TODO replace with your own action
-enum MessageAction { action }
+
+enum MessageAction { fetchComment,fetchSuccess,fetchFailure,tapComment,tapAvatar }
 
 class MessageActionCreator {
-  static Action onAction() {
-    return const Action(MessageAction.action);
-  }
+
 }

@@ -2,7 +2,19 @@ import 'package:fish_redux/fish_redux.dart';
 import 'package:tape/models/clip.dart';
 import 'package:tape/models/user.dart';
 
-enum MineAction { fetchUserInfo,fetchUserInfoSuccess,fetchUserInfoFailure,fetchUserClip,fetchUserClipSuccess,fetchUserClipFailure, onRefresh,tapClipCover,logout}
+enum MineAction {
+  fetchUserInfo,
+  fetchUserInfoSuccess,
+  fetchUserInfoFailure,
+  fetchUserClip,
+  fetchUserClipSuccess,
+  fetchUserClipFailure,
+  onRefresh,
+  tapClipCover,
+  logout,
+  tapFollower,
+  tapFollowing
+}
 
 class MineActionCreator {
 
@@ -36,6 +48,16 @@ class MineActionCreator {
 
   static Action onTapClipCover(Clip clip){
     return Action(MineAction.tapClipCover,payload: clip);
+  }
+
+
+  static Action onTapFollower(){
+    return const Action(MineAction.tapFollower);
+  }
+
+
+  static Action onTapFollowing(){
+    return const Action(MineAction.tapFollowing);
   }
 
 

@@ -2,11 +2,10 @@ import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart' hide Action;
 import 'package:tape/page/auth_page/page.dart';
 import 'package:tape/page/creation_page/page.dart';
-import 'package:tape/page/example/page.dart';
+import 'package:tape/page/friend_page/page.dart';
 import 'package:tape/page/home_page/page.dart';
 import 'package:tape/page/main_page/page.dart';
 import 'package:tape/page/message_page/page.dart';
-import 'package:tape/page/message_page/rec_comment_page/page.dart';
 import 'package:tape/page/mine_page/page.dart';
 import 'package:tape/page/player_page/page.dart';
 import 'package:tape/page/profile_page/page.dart';
@@ -16,16 +15,14 @@ Widget createApp(String firstPae) {
   final AbstractRoutes routes = PageRoutes(
     pages: <String, Page<Object, dynamic>>{
       'auth': AuthPage(),
-      'main':TabPage(),
+      'main':MainPage(),
       'home':HomePage(),
       'message':MessagePage(),
       'creation':CreationPage(),
       'mine':MinePage(),
       'player':PlayerPage(),
       'profile':ProfilePage(),
-
-      'recComment':RecCommentPage(),
-      'example':ExamplePage(),
+      'friend':FriendPage(),
     },
     visitor: (String path, Page<Object, dynamic> page) {
       page.enhancer.append(
@@ -61,7 +58,7 @@ Widget createApp(String firstPae) {
     home: routes.buildPage(firstPae, {
       'pageList':[
         routes.buildPage("home", null),
-        routes.buildPage("example", null),
+        routes.buildPage("message", null),
         routes.buildPage("creation", null),
         routes.buildPage("mine", null)
       ]

@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:tape/api/request/Address.dart';
+import 'package:tape/models/user.dart';
 
 import 'action.dart';
 import 'state.dart';
@@ -14,31 +15,69 @@ Widget buildView(
   SystemChrome.setEnabledSystemUIOverlays(
       [SystemUiOverlay.top, SystemUiOverlay.bottom]);
 
-  Widget _buildFriendButton(){
-    if(state.profileUser.friendShipStatus==2){
+  Widget buildFriendStatusButton() {
+    User friend = state.profileUser;
+    if (friend.friendShipStatus == 0) {
       return FlatButton(
         child: Text(
-            "互相关注"
+          "关注",
+          style: TextStyle(
+            color: Colors.white,
+          ),
         ),
         color: Colors.green,
-        onPressed: () {dispatch(ProfileActionCreator.onTapFriendShip());},
+        onPressed: () {},
       );
     }
-    if(state.profileUser.friendShipStatus==1){
+
+    if (friend.friendShipStatus == 1) {
       return FlatButton(
         child: Text(
-            "已关注"
+          "取消关注",
+          style: TextStyle(
+            color: Colors.white,
+          ),
         ),
-        color: Colors.green,
-        onPressed: () {dispatch(ProfileActionCreator.onTapFriendShip());},
+        color: Colors.red,
+        onPressed: () {},
       );
     }
+
+    if (friend.friendShipStatus == 2) {
+      return FlatButton(
+        child: Text(
+          "回粉",
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        color: Colors.green,
+        onPressed: () {},
+      );
+    }
+
+    if (friend.friendShipStatus == 3) {
+      return FlatButton(
+        child: Text(
+          "互相关注",
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        color: Colors.green,
+        onPressed: () {},
+      );
+    }
+
     return FlatButton(
       child: Text(
-        "关注"
+        "我自己",
+        style: TextStyle(
+          color: Colors.white,
+        ),
       ),
       color: Colors.green,
-      onPressed: () {dispatch(ProfileActionCreator.onTapFriendShip());},
+      onPressed: () {},
     );
   }
 
@@ -58,7 +97,7 @@ Widget buildView(
             onPressed: () {},
           ),
           SizedBox(width: 10),
-          _buildFriendButton()
+          buildFriendStatusButton()
         ],
       );
     }

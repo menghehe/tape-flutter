@@ -1,40 +1,37 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
-import 'package:line_icons/line_icons.dart';
-import 'package:shifting_tabbar/shifting_tabbar.dart';
+import 'package:tape/utils/adapt.dart';
 
-import 'action.dart';
 import 'state.dart';
 
-Widget buildView(MessageState state, Dispatch dispatch, ViewService viewService){
+Widget buildView(
+    MessageState state, Dispatch dispatch, ViewService viewService) {
   return Scaffold(
-    appBar: ShiftingTabBar (
-      controller: state.tabController,
-      tabs: [
-        ShiftingTab(
-          icon: Icon(Icons.directions_bike),
-          text: "Test 1",
+    body: Column(
+      children: <Widget>[
+        SizedBox(
+          height: Adapt.padTopH(),
         ),
-        ShiftingTab(
-            icon: Icon(Icons.directions_car),
-            text: "Test 2"
+        Container(
+          height: Adapt.screenH()*0.07,
+            child: TabBar(
+              labelColor: Colors.green,
+                controller: state.tabController,
+                tabs: [
+              ListTile(
+                title: Text("评论"),
+              ),
+              ListTile(
+                title: Text("点赞"),
+              )
+            ]),
         ),
-        ShiftingTab(
-            icon: Icon(Icons.directions_transit),
-            text: "Test 3"
-        ),
+        Expanded(
+            child: TabBarView(controller: state.tabController, children: [
+          viewService.buildComponent('commentComponent'),
+          viewService.buildComponent('likeComponent')
+        ]))
       ],
     ),
-    body:PageView(
-      controller: state.pageController,
-      children: <Widget>[
-        Icon(Icons.home),
-        Icon(Icons.home),
-        Icon(Icons.home),
-      ],
-    )
   );
 }
-
-
-

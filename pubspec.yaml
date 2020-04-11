@@ -41,21 +41,15 @@ dependencies:
       ref: master
   observable: any
   dart_chromecast: ^0.1.2
-  shimmer: ^1.1.0
+  shimmer: ^1.1.1
   flutter_staggered_grid_view: ^0.3.0
   flustars: ^0.2.6+1
   flutter_speed_dial: ^1.2.5
   progress_dialog: ^1.2.1
   jpush_flutter: 0.5.3
-  bottom_navy_bar: ^5.3.2
   flutter_login: ^1.0.14
   font_awesome_flutter: ^8.5.0
   loading: ^1.0.2
-  shifting_tabbar: ^0.3.1
-
-
-
-
 
 
 

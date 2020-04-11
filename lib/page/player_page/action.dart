@@ -23,7 +23,7 @@ class PlayerActionCreator {
     return const Action(PlayerAction.fetchComment);
   }
 
-  static Action onFetchSuccess(CommentPage commentPage){
+  static Action onFetchSuccess(LikePage commentPage){
     return Action(PlayerAction.fetchSuccess,payload: commentPage);
   }
 

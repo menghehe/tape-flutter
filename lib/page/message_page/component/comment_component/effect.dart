@@ -6,38 +6,38 @@ import 'package:tape/models/comment.dart';
 import 'action.dart';
 import 'state.dart';
 
-Effect<RecCommentState> buildEffect() {
-  return combineEffects(<Object, Effect<RecCommentState>>{
+Effect<CommentState> buildEffect() {
+  return combineEffects(<Object, Effect<CommentState>>{
     Lifecycle.initState:_onInit,
-    RecCommentAction.fetchComment: _onFetchComment,
-    RecCommentAction.tapComment:_onTapComment,
-    RecCommentAction.tapAvatar:_onTapAvatar,
+    CommentAction.fetchComment: _onFetchComment,
+    CommentAction.tapComment:_onTapComment,
+    CommentAction.tapAvatar:_onTapAvatar,
   });
 }
 
-void _onInit(Action action, Context<RecCommentState> ctx){
-  ctx.dispatch(RecCommentActionCreator.onFetchComment());
+void _onInit(Action action, Context<CommentState> ctx){
+  ctx.dispatch(CommentActionCreator.onFetchComment());
 }
 
-void _onFetchComment(Action action, Context<RecCommentState> ctx) {
+void _onFetchComment(Action action, Context<CommentState> ctx) {
   Comment comment = Comment();
   Future future = CommentApi.getToMe(comment);
   future.then((result){
     if(result.isSuccess){
       CommentPage commentPage = JsonMapper.fromMap(result.data);
-      ctx.dispatch(RecCommentActionCreator.onFetchSuccess(commentPage));
+      ctx.dispatch(CommentActionCreator.onFetchSuccess(commentPage));
     }else{
-      ctx.dispatch(RecCommentActionCreator.onFetchFailure());
+      ctx.dispatch(CommentActionCreator.onFetchFailure());
     }
   });
 }
 
 
-void _onTapComment(Action action, Context<RecCommentState> ctx) {
+void _onTapComment(Action action, Context<CommentState> ctx) {
   Navigator.of(ctx.context).pushNamed("player",arguments: {"clipId":action.payload.clipId});
 
 }
 
-void _onTapAvatar(Action action, Context<RecCommentState> ctx) {
+void _onTapAvatar(Action action, Context<CommentState> ctx) {
   Navigator.of(ctx.context).pushNamed("profile",arguments: {"profileUser":action.payload.user});
 }

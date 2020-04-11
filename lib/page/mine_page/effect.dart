@@ -17,6 +17,8 @@ Effect<MineState> buildEffect() {
     MineAction.fetchUserClip: _onFetchUserClip,
     MineAction.onRefresh: _onRefresh,
     MineAction.tapClipCover: _onTapClipCover,
+    MineAction.tapFollowing:_onTapFollowing,
+    MineAction.tapFollower:_onTapFollower,
     MineAction.logout: _onLogout,
   });
 }
@@ -90,4 +92,12 @@ void _onLogout(Action action, Context<MineState> ctx) {
       ],
     ),
   );
+}
+
+void _onTapFollowing(Action action, Context<MineState> ctx) {
+  Navigator.of(ctx.context).pushNamed("friend", arguments: {'type':1});
+}
+
+void _onTapFollower(Action action, Context<MineState> ctx) {
+  Navigator.of(ctx.context).pushNamed("friend", arguments: {'type':2});
 }
