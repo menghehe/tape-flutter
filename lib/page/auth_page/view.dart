@@ -11,15 +11,29 @@ import 'state.dart';
 
 Widget buildView(AuthState state, Dispatch dispatch, ViewService viewService) {
 
-var loginTime = Duration(milliseconds: timeDilation.ceil() * 2250);
 
 
-  Future<String> _recoverPassword(String name) {
-    return Future.delayed(loginTime).then((_) {
-//      if (!mockUsers.containsKey(name)) {
-//        return 'Username not exists';
-//      }
-      return null;
+  Future<String> _onLogin(LoginData loginData){
+    Future future = UserApi.login(loginData.name, loginData.password);
+    return future.then((result){
+      if(result.isSuccess){
+        dispatch(AuthActionCreator.onLoginSuccess(result.data['token']));
+        return null;
+      }else{
+        return result.message;
+      }
+    });
+  }
+
+  Future<String> _onSignUp(LoginData loginData) {
+    Future future = UserApi.signUp(loginData.name, loginData.password);
+    return future.then((result){
+      if(result.isSuccess){
+        dispatch(AuthActionCreator.onSignUpSuccess());
+        return null;
+      }else{
+        return result.message;
+      }
     });
   }
 
@@ -34,9 +48,9 @@ var loginTime = Duration(milliseconds: timeDilation.ceil() * 2250);
        loginButton: '登录',
        signupButton: '注册',
        forgotPasswordButton: '忘记密码?',
-       recoverPasswordButton: 'HELP ME',
-       goBackButton: 'GO BACK',
-       confirmPasswordError: 'Not match!',
+       recoverPasswordButton: '找回密码',
+       goBackButton: '返回',
+       confirmPasswordError: '两次密码不一致',
        recoverPasswordIntro: 'Don\'t feel bad. Happens all the time.',
        recoverPasswordDescription: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
        recoverPasswordSuccess: 'Password rescued successfully',
@@ -60,10 +74,10 @@ var loginTime = Duration(milliseconds: timeDilation.ceil() * 2250);
       return null;
     },
     onLogin: (loginData) {
-      return dispatch(AuthActionCreator.onLogin(loginData));
+      return _onLogin(loginData);
     },
     onSignup: (loginData) {
-      return dispatch(AuthActionCreator.onSignUp(loginData));
+      return _onSignUp(loginData);
     },
     onRecoverPassword: (name) {
       return Future.delayed(Duration(seconds: 1),(){

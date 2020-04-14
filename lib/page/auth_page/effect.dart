@@ -8,42 +8,23 @@ import 'state.dart';
 
 Effect<AuthState> buildEffect() {
   return combineEffects(<Object, Effect<AuthState>>{
-    AuthAction.login: _onLogin,
-    AuthAction.signUp: _onSignUp,
+    AuthAction.loginSuccess: _onLoginSuccess,
+    AuthAction.signUpSuccess: _onSignUpSuccess,
     AuthAction.complete:_onCompleted,
   });
 }
 
-Future<String> _onLogin(Action action, Context<AuthState> ctx) {
-  Future<dynamic> data =
-      UserApi.login(action.payload.name, action.payload.password);
-  return data.then((result) async {
-    if (result.isSuccess) {
-      Storage.setString('token', result.data["token"]);
-      Navigator.of(ctx.context).pushReplacementNamed("main",arguments: {
-        'pageList':ctx.state.pageList
-      });
-      return null;
-    } else {
-      return '发生错误';
-    }
+void _onLoginSuccess(Action action, Context<AuthState> ctx) {
+  Storage.setString('token', action.payload);
+  Navigator.of(ctx.context).pushReplacementNamed("main",arguments: {
+    'pageList':ctx.state.pageList
   });
 }
 
-Future<String> _onSignUp(Action action, Context<AuthState> ctx) {
-  Future<dynamic> data =
-  UserApi.signUp(action.payload.name, action.payload.password);
-  return data.then((result) async {
-    if (result.isSuccess) {
-//      ctx.dispatch(AuthActionCreator.onLogin(action.payload));
-      Fluttertoast.showToast(msg: "注册成功，请登录");
-      Navigator.of(ctx.context).pushReplacementNamed("auth",arguments: {
-        'pageList':ctx.state.pageList
-      });
-      return null;
-    } else {
-      return '发生错误';
-    }
+void _onSignUpSuccess(Action action, Context<AuthState> ctx) {
+  Fluttertoast.showToast(msg: "注册成功");
+  Navigator.of(ctx.context).pushReplacementNamed("auth",arguments: {
+    'pageList':ctx.state.pageList
   });
 }
 

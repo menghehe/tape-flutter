@@ -50,6 +50,11 @@ dependencies:
   flutter_login: ^1.0.14
   font_awesome_flutter: ^8.5.0
   loading: ^1.0.2
+  bubble_tab_indicator: ^0.1.4
+  md2_tab_indicator: ^1.0.2
+  shifting_tabbar: ^0.3.1
+
+
 
 
 
