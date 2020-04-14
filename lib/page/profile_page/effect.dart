@@ -41,7 +41,7 @@ void _fetchUserInfo(Action action, Context<ProfileState> ctx){
 void _onFetchUserClip(Action action, Context<ProfileState> ctx){
   Clip clip = Clip();
   clip.creator = ctx.state.profileUser.id;
-  Future future = ClipApi.getClip(clip);
+  Future future = ClipApi.listClip(clip);
   future.then((result){
     if(result.isSuccess){
       JsonMapper().useAdapter(JsonMapperAdapter(

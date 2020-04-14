@@ -43,7 +43,7 @@ void _fetchUserInfo(Action action, Context<MineState> ctx) {
 void _onFetchUserClip(Action action, Context<MineState> ctx) {
   Clip clip = Clip();
   clip.creator = ctx.state.user.id;
-  Future future = ClipApi.getClip(clip);
+  Future future = ClipApi.listClip(clip);
   future.then((result) {
     if (result.isSuccess) {
       JsonMapper().useAdapter(JsonMapperAdapter(valueDecorators: {

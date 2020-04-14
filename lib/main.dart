@@ -7,6 +7,7 @@ import 'main.reflectable.dart' show initializeReflectable;
 import 'models/comment.dart';
 import 'models/like.dart';
 import 'models/user.dart';
+import 'models/clip.dart';
 
 
 void main() {
@@ -17,6 +18,7 @@ void main() {
         typeOf<List<Comment>>(): (value) => value.cast<Comment>(),
         typeOf<List<Like>>(): (value) => value.cast<Like>(),
         typeOf<List<User>>(): (value) => value.cast<User>(),
+        typeOf<List<Clip>>(): (value) => value.cast<Clip>(),
       })
   );
   Future<String> future = Storage.getString("token");

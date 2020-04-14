@@ -1,9 +1,7 @@
-import 'dart:ui';
-
 import 'package:fish_redux/fish_redux.dart';
-import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:tape/models/user.dart';
+import 'package:tape/models/base.dart';
+import 'package:tape/models/clip.dart';
 import 'package:tape/page/home_page/clip_cover_component/state.dart';
 
 class HomeState implements Cloneable<HomeState> ,MutableSource{
@@ -12,11 +10,13 @@ class HomeState implements Cloneable<HomeState> ,MutableSource{
   HomeState clone() {
     return HomeState()
     ..refreshController = refreshController
-    ..clipCoverStateList =clipCoverStateList;
+    ..clipCoverStateList =clipCoverStateList
+    ..clipParam = clipParam;
   }
 
 
   List<ClipCoverState> clipCoverStateList;
+  Clip clipParam;
 
   @override
   int get itemCount {
@@ -51,8 +51,14 @@ class HomeState implements Cloneable<HomeState> ,MutableSource{
 }
 
 HomeState initState(Map<String, dynamic> args) {
+  Clip clipParam = Clip();
+  OrderItem orderItem = OrderItem("create_time", false);
+  clipParam.orders = [orderItem];
+  clipParam.current = 1;
+  clipParam.size = 4;
   return HomeState()
-      ..refreshController = new RefreshController();
+      ..refreshController = new RefreshController()
+      ..clipParam = clipParam;
 }
 
 

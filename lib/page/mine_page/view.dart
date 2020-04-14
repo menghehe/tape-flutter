@@ -7,6 +7,7 @@ import 'package:line_icons/line_icons.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:tape/api/request/Address.dart';
 import 'package:tape/models/user.dart';
+import 'package:tape/utils/adapt.dart';
 
 import 'action.dart';
 import 'state.dart';
@@ -39,20 +40,22 @@ Widget buildView(MineState state, Dispatch dispatch, ViewService viewService) {
                       SizedBox(height: 40),
                       Stack(
                         children: <Widget>[
-                          Align(
-                              alignment: Alignment.topRight,
-                              child: InkWell(
-                                child: Icon(LineIcons.sign_out),
-                                onTap: () =>
-                                    {dispatch(MineActionCreator.onLogout())},
-                              )),
                           Center(
                             child: CircleAvatar(
                               backgroundImage: NetworkImage(
                                   Address.BASE_AVATAR_URL + user.avatar),
                               radius: 50,
                             ),
-                          )
+                          ),
+                          Padding(
+                            child: InkWell(
+                              child: Icon(LineIcons.sign_out),
+                              onTap: () =>
+                                  {dispatch(MineActionCreator.onLogout())},
+                            ),
+                            padding:
+                                EdgeInsets.only(left: Adapt.screenW() - 40),
+                          ),
                         ],
                       ),
                       SizedBox(height: 10),

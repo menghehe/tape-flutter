@@ -2,6 +2,7 @@ import 'package:dart_json_mapper/dart_json_mapper.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart' hide Action;
 import 'package:tape/api/like_api.dart';
+import 'package:tape/models/base.dart';
 import 'package:tape/models/comment.dart';
 import 'package:tape/models/like.dart';
 import 'action.dart';
@@ -22,6 +23,10 @@ void _onInit(Action action, Context<LikeState> ctx){
 
 void _onFetchLike(Action action, Context<LikeState> ctx) {
   Like like = Like();
+  OrderItem orderItem = OrderItem("create_time", false);
+  like.orders = [orderItem];
+  like.current = 0;
+  like.size = 500;
   Future future = LikeApi.getToMe(like);
   future.then((result){
     if(result.isSuccess){

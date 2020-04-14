@@ -1,6 +1,5 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:tape/utils/adapt.dart';
 
@@ -20,21 +19,22 @@ Widget buildView(HomeState state, Dispatch dispatch, ViewService viewService) {
           backgroundColor: Colors.white,
         ),
         preferredSize: Size.fromHeight(Adapt.screenH() * 0.07)),
-    body: Container(
+    body: Padding(
+        padding: EdgeInsets.only(bottom: Adapt.screenH() * 0.07),
         child: SmartRefresher(
-      child: ListView.builder(
-          itemBuilder: adapter.itemBuilder, itemCount: adapter.itemCount),
-      onRefresh: () => dispatch(HomeActionCreator.refresh()),
-      onLoading: () => dispatch(HomeActionCreator.refresh()),
-      controller: state.refreshController,
-      enablePullDown: true,
-      enablePullUp: true,
-      header: WaterDropMaterialHeader(
-        color: Colors.white,
-      ),
-      footer: ClassicFooter(
-        loadStyle: LoadStyle.ShowWhenLoading,
-      ),
-    )),
+          child: ListView.builder(
+              itemBuilder: adapter.itemBuilder, itemCount: adapter.itemCount),
+          onRefresh: () => dispatch(HomeActionCreator.refresh()),
+          onLoading: () => dispatch(HomeActionCreator.loadMore()),
+          controller: state.refreshController,
+          enablePullDown: true,
+          enablePullUp: true,
+          header: WaterDropMaterialHeader(
+            color: Colors.white,
+          ),
+          footer: ClassicFooter(
+            loadStyle: LoadStyle.ShowAlways,
+          ),
+        )),
   );
 }

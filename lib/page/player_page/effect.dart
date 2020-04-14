@@ -62,14 +62,7 @@ void _onFetchComment(Action action,Context<PlayerState> ctx){
   Future future = CommentApi.getComment(comment);
   future.then((result){
     if(result.isSuccess){
-      JsonMapper().useAdapter(JsonMapperAdapter(
-          valueDecorators: {
-            typeOf<List<Comment>>(): (value) => value.cast<Comment>(),
-          })
-      );
-      LikePage commentPage = LikePage();
-      commentPage = JsonMapper.fromMap(result.data);
-      ctx.dispatch(PlayerActionCreator.onFetchSuccess(commentPage));
+      ctx.dispatch(PlayerActionCreator.onFetchSuccess(JsonMapper.fromMap(result.data)));
     }
   });
 }
@@ -78,9 +71,6 @@ void _onAddComment(Action action,Context<PlayerState> ctx){
   if(ctx.state.commentEditController.text.length==0){
     return;
   }
-  ProgressDialog progressDialog = ProgressDialog(ctx.context,type: ProgressDialogType.Normal, isDismissible: true, showLogs: true);
-  progressDialog.show();
-
   Comment comment = Comment();
   comment.clipId = ctx.state.clip.id;
   comment.text = ctx.state.commentEditController.text;
@@ -89,14 +79,13 @@ void _onAddComment(Action action,Context<PlayerState> ctx){
   Future future = CommentApi.postComment(comment);
   future.then((result){
     if(result.isSuccess){
+      ctx.dispatch(PlayerActionCreator.onAddCommentSuccess());
       ctx.state.commentEditController.text=null;
       ctx.dispatch(PlayerActionCreator.onFetchComment());
-      progressDialog.dismiss();
       ctx.state.commentEditController.clear();
       ctx.state.commentFocusNode.unfocus();
     }else{
-      progressDialog.dismiss();
-
+      ctx.dispatch(PlayerActionCreator.onAddCommentFailure());
     }
   });
 

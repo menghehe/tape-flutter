@@ -1,5 +1,6 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
+import 'package:progress_dialog/progress_dialog.dart';
 import 'package:tape/api/request/Address.dart';
 import 'package:tape/models/clip.dart';
 import 'package:tape/models/comment.dart';
@@ -25,8 +26,7 @@ class PlayerState implements Cloneable<PlayerState>{
         ..clipId = clipId
         ..commentEditController = commentEditController
         ..commentList = commentList
-        ..commentFocusNode = commentFocusNode;
-  }
+        ..commentFocusNode = commentFocusNode;}
 
 }
 

@@ -1,8 +1,16 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:tape/models/clip.dart';
 
-//TODO replace with your own action
-enum HomeAction { fetchRecommend,add,fetchSuccess,fetchFailure,refresh,loadMore, loadSuccess,loadFailure}
+enum HomeAction {
+  fetchRecommend,
+  add,
+  fetchSuccess,
+  fetchFailure,
+  refresh,
+  loadMore,
+  loadSuccess,
+  loadFailure
+}
 
 class HomeActionCreator {
   static Action fetchRecommend() {
@@ -11,8 +19,8 @@ class HomeActionCreator {
   static Action onAdd(){
     return const Action(HomeAction.add);
   }
-  static Action fetchSuccess(List<Clip> clipList){
-    return  Action(HomeAction.fetchSuccess,payload: clipList);
+  static Action fetchSuccess(ClipPage clipPage){
+    return  Action(HomeAction.fetchSuccess,payload: clipPage);
   }
 
   static Action fetchFailure(){
@@ -23,12 +31,12 @@ class HomeActionCreator {
     return const Action(HomeAction.refresh);
   }
 
-  static Action loadMore(List<Clip> clipList){
+  static Action loadMore(){
     return const Action(HomeAction.loadMore);
   }
 
-  static Action loadSuccess(List<Clip> clipList){
-    return Action(HomeAction.loadSuccess,payload: clipList);
+  static Action loadSuccess(ClipPage clipPage){
+    return Action(HomeAction.loadSuccess,payload: clipPage);
   }
 
   static Action loadFailure(){

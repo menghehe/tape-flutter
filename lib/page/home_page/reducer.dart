@@ -17,7 +17,7 @@ Reducer<HomeState> buildReducer() {
 }
 
 HomeState _fetchSuccess(HomeState state, Action action){
-  final List<Clip> clipList = action.payload ??<clipCoverComponent.ClipCoverState>[];
+  final List<Clip> clipList = action.payload.records ??<clipCoverComponent.ClipCoverState>[];
   final HomeState newState = state.clone();
   List<clipCoverComponent.ClipCoverState> clipCoverStateList = [];
   clipList.forEach((clip)=>{clipCoverStateList.add(clipCoverComponent.initState(clip))});
@@ -33,11 +33,9 @@ HomeState _fetchFailure(HomeState state, Action action){
 }
 
 HomeState _loadSuccess(HomeState state, Action action){
-  final List<Clip> clipList = action.payload ??<clipCoverComponent.ClipCoverState>[];
+  final List<Clip> clipList = action.payload.records ??<clipCoverComponent.ClipCoverState>[];
   final HomeState newState = state.clone();
-  List<clipCoverComponent.ClipCoverState> clipCoverStateList = [];
-  clipList.forEach((clip)=>{clipCoverStateList.add(clipCoverComponent.initState(clip))});
-  newState.clipCoverStateList = clipCoverStateList;
+  clipList.forEach((clip)=>{state.clipCoverStateList.add(clipCoverComponent.initState(clip))});
   newState.refreshController.loadComplete();
   return newState;
 }

@@ -13,18 +13,18 @@ Widget buildView(
           height: Adapt.padTopH(),
         ),
         Container(
-          height: Adapt.screenH()*0.07,
-            child: TabBar(
+          height: Adapt.screenH() * 0.07,
+          child: TabBar(
               labelColor: Colors.green,
-                controller: state.tabController,
-                tabs: [
-              ListTile(
-                title: Text("评论"),
-              ),
-              ListTile(
-                title: Text("点赞"),
-              )
-            ]),
+              controller: state.tabController,
+              tabs: [
+                ListTile(
+                  title: Text("评论"),
+                ),
+                ListTile(
+                  title: Text("点赞"),
+                )
+              ]),
         ),
         Expanded(
             child: TabBarView(controller: state.tabController, children: [
