@@ -2,7 +2,6 @@ import 'package:fish_redux/fish_redux.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:tape/api/request/Address.dart';
-import 'package:tape/customer_widgets/video_player_item.dart';
 import 'package:tape/page/home_page/clip_cover_component/action.dart';
 import 'package:tape/utils/adapt.dart';
 
@@ -33,7 +32,8 @@ Widget buildView(
             ),
             InkWell(
               onTap: (){dispatch(ClipCoverActionCreator.tapUserAvatar());},
-              child: Container(
+              child: Padding(
+                padding: EdgeInsets.only(left: 5,right: 5),
                 child: ListTile(
                   leading: CircleAvatar(
                     backgroundImage: NetworkImage(

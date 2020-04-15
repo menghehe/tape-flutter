@@ -20,21 +20,24 @@ Widget buildView(HomeState state, Dispatch dispatch, ViewService viewService) {
         ),
         preferredSize: Size.fromHeight(Adapt.screenH() * 0.07)),
     body: Padding(
-        padding: EdgeInsets.only(bottom: Adapt.screenH() * 0.07),
-        child: SmartRefresher(
-          child: ListView.builder(
-              itemBuilder: adapter.itemBuilder, itemCount: adapter.itemCount),
-          onRefresh: () => dispatch(HomeActionCreator.refresh()),
-          onLoading: () => dispatch(HomeActionCreator.loadMore()),
-          controller: state.refreshController,
-          enablePullDown: true,
-          enablePullUp: true,
-          header: WaterDropMaterialHeader(
-            color: Colors.white,
-          ),
-          footer: ClassicFooter(
-            loadStyle: LoadStyle.ShowAlways,
-          ),
-        )),
+      padding: EdgeInsets.only(bottom: Adapt.screenH() * 0.07),
+      child: SmartRefresher(
+        child: ListView.builder(
+          itemBuilder: adapter.itemBuilder,
+          itemCount: adapter.itemCount,
+        ),
+        onRefresh: () => dispatch(HomeActionCreator.refresh()),
+        onLoading: () => dispatch(HomeActionCreator.loadMore()),
+        controller: state.refreshController,
+        enablePullDown: true,
+        enablePullUp: true,
+        header: WaterDropMaterialHeader(
+          color: Colors.white,
+        ),
+        footer: ClassicFooter(
+          loadStyle: LoadStyle.ShowAlways,
+        ),
+      ),
+    ),
   );
 }

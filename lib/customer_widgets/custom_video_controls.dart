@@ -7,7 +7,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:open_iconic_flutter/open_iconic_flutter.dart';
-import 'package:tape/customer_widgets/service_discovery.dart';
 import 'package:tape/utils/adapt.dart';
 import 'package:video_player/video_player.dart';
 
@@ -35,7 +34,6 @@ class _CupertinoControlsState extends State<CustomCupertinoControls> {
   final marginSize = 5.0;
   Timer _expandCollapseTimer;
   Timer _initTimer;
-  ServiceDiscovery _serviceDiscovery;
 
   VideoPlayerController controller;
   ChewieController chewieController;
@@ -90,8 +88,6 @@ class _CupertinoControlsState extends State<CustomCupertinoControls> {
 
   @override
   void initState() {
-    _serviceDiscovery = ServiceDiscovery();
-    _serviceDiscovery.startDiscovery();
     super.initState();
   }
 

@@ -28,7 +28,7 @@ HomeState _fetchSuccess(HomeState state, Action action){
 
 HomeState _fetchFailure(HomeState state, Action action){
   final HomeState newState = state.clone();
-  newState.refreshController.loadFailed();
+  newState.refreshController.refreshFailed();
   return newState;
 }
 

@@ -1,4 +1,5 @@
 import 'package:fish_redux/fish_redux.dart';
+import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:tape/customer_widgets/keepalive_widget.dart';
 import 'package:tape/page/main_page/action.dart';
@@ -10,7 +11,7 @@ Widget buildView(MainState state, Dispatch dispatch, ViewService viewService) {
   return Builder(
     builder: (context){
       Adapt.initContext(context);
-
+      ScreenUtil.getInstance();
       Widget _buildPage(Widget page) {
         return KeepAliveWidget(page);
       }

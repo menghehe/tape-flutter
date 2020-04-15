@@ -9,7 +9,6 @@ import 'state.dart';
 
 Effect<HomeState> buildEffect() {
   return combineEffects(<Object, Effect<HomeState>>{
-    HomeAction.add: _onAdd,
     Lifecycle.initState:_init,
     HomeAction.fetchRecommend: _fetchRecommend,
     HomeAction.refresh:_refresh,
@@ -27,13 +26,12 @@ void _fetchRecommend(Action action, Context<HomeState> ctx) {
   data.then((result){
     if(result.isSuccess){
       ctx.dispatch(HomeActionCreator.fetchSuccess(JsonMapper.fromMap(result.data)));
+    }else{
+      ctx.dispatch(HomeActionCreator.fetchFailure());
     }
   });
 }
 
-void _onAdd(Action action, Context<HomeState> ctx){
-  Navigator.of(ctx.context).pushNamed("clipRecord");
-}
 
 Future<bool> _refresh(Action action, Context<HomeState> ctx) {
   Clip clipParam = Clip();
@@ -48,6 +46,8 @@ Future<bool> _refresh(Action action, Context<HomeState> ctx) {
   return data.then((result){
     if(result.isSuccess){
       ctx.dispatch(HomeActionCreator.fetchSuccess(JsonMapper.fromMap(result.data)));
+    }else{
+      ctx.dispatch(HomeActionCreator.fetchFailure());
     }
     return true;
   });

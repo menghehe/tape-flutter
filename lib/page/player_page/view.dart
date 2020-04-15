@@ -3,8 +3,7 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:loading/indicator/ball_pulse_indicator.dart';
-import 'package:loading/loading.dart';
+import 'package:loading_animations/loading_animations.dart';
 import 'package:tape/api/request/Address.dart';
 import 'package:tape/customer_widgets/sliverappbardelegate.dart';
 import 'package:tape/customer_widgets/video_player_item.dart';
@@ -20,15 +19,13 @@ Widget buildView(
   SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
 
   if (state.clip == null) {
-    return Scaffold(
-      body: Container(
-        color: Colors.lightBlue,
-        child: Center(
-          child: Loading(
-              indicator: BallPulseIndicator(), size: 100.0, color: Colors.pink),
-        ),
-      ),
-    );
+    if (state.commentList == null) {
+      return Center(
+          child: LoadingBouncingLine.circle(
+            backgroundColor: Colors.green,
+          )
+      );
+    }
   }
 
   Widget buildComment() {

@@ -3,6 +3,7 @@ import 'package:fish_redux/fish_redux.dart';
 import 'package:jpush_flutter/jpush_flutter.dart';
 import 'package:tape/api/user_api.dart';
 import 'package:tape/models/user.dart';
+import 'package:tape/utils/adapt.dart';
 import 'package:tape/utils/storage.dart';
 
 import 'state.dart';

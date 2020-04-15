@@ -11,12 +11,14 @@ class HomeState implements Cloneable<HomeState> ,MutableSource{
     return HomeState()
     ..refreshController = refreshController
     ..clipCoverStateList =clipCoverStateList
-    ..clipParam = clipParam;
+    ..clipParam = clipParam
+    ..mark = mark;
   }
 
 
   List<ClipCoverState> clipCoverStateList;
   Clip clipParam;
+  int mark = 0;
 
   @override
   int get itemCount {

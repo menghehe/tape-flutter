@@ -3,7 +3,6 @@ import 'package:tape/models/clip.dart';
 
 enum HomeAction {
   fetchRecommend,
-  add,
   fetchSuccess,
   fetchFailure,
   refresh,
@@ -15,9 +14,6 @@ enum HomeAction {
 class HomeActionCreator {
   static Action fetchRecommend() {
     return const Action(HomeAction.fetchRecommend);
-  }
-  static Action onAdd(){
-    return const Action(HomeAction.add);
   }
   static Action fetchSuccess(ClipPage clipPage){
     return  Action(HomeAction.fetchSuccess,payload: clipPage);

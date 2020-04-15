@@ -1,11 +1,10 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
-import 'package:loading/indicator/ball_pulse_indicator.dart';
-import 'package:loading/loading.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:loading_animations/loading_animations.dart';
 import 'package:tape/api/request/Address.dart';
 import 'package:tape/models/comment.dart';
+import 'package:tape/utils/adapt.dart';
 
 import 'action.dart';
 import 'state.dart';
@@ -15,8 +14,9 @@ Widget buildView(
   Widget buildComment() {
     if (state.commentList == null) {
       return Center(
-        child: Loading(
-            indicator: BallPulseIndicator(), size: 100.0, color: Colors.green),
+        child: LoadingBouncingLine.circle(
+          backgroundColor: Colors.green,
+        )
       );
     }
     return ListView.separated(
@@ -71,10 +71,15 @@ Widget buildView(
     );
   }
 
-  return SmartRefresher(
-    controller: state.refreshController,
-    header: WaterDropHeader(),
-    onRefresh: () => {dispatch(CommentActionCreator.onFetchComment())},
+  println(Adapt.mediaQuery.padding.bottom);
+  return Padding(
+    padding: EdgeInsets.only(bottom: ScreenUtil.getInstance().screenHeight*0.08),
     child: buildComment(),
   );
+//  return SmartRefresher(
+//    controller: state.refreshController,
+//    header: WaterDropHeader(),
+//    onRefresh: () => {dispatch(CommentActionCreator.onFetchComment())},
+//    child: buildComment(),
+//  );
 }

@@ -1,25 +1,31 @@
-
 import 'package:dio/dio.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:tape/api/request/ResultData.dart';
 
 import 'Address.dart';
 import 'Interceptors.dart';
 
-class HttpManager{
+class HttpManager {
   static HttpManager _instance = HttpManager._internal();
 
   Dio _dio;
 
   factory HttpManager() => _instance;
 
-  HttpManager._internal({String baseUrl}){
-    if(null==_dio){
-      _dio = new Dio(new BaseOptions(
-        baseUrl: "",
-        connectTimeout: 15000
-      ));
-      _dio.interceptors.add(new LogsInterceptors());
+  HttpManager._internal({String baseUrl}) {
+    if (null == _dio) {
+      _dio = new Dio(new BaseOptions(baseUrl: "", connectTimeout: 3000));
+      _dio.interceptors.add(new RequestInterceptors());
       _dio.interceptors.add(new ResponseInterceptors());
+      _dio.interceptors.add(PrettyDioLogger(
+          requestHeader: true,
+          requestBody: true,
+          responseBody: true,
+          responseHeader: false,
+          error: true,
+          compact: true,
+          maxWidth: 90));
     }
   }
 
@@ -55,15 +61,16 @@ class HttpManager{
     try {
       response = await _dio.get(url, queryParameters: params);
     } on DioError catch (e) {
-//      return resultError(e);
+      return ResultData(null, false, -10, e.message);
     }
 
     if (response.data is DioError) {
-//      return resultError(response.data['code']);
+      return ResultData(null, false, -10, null);
     }
 
     return response.data;
   }
+
   ///通用的POST请求
   post(url, params, {noTip = false}) async {
     Response response;
@@ -71,22 +78,20 @@ class HttpManager{
     try {
       response = await _dio.post(url, data: params);
     } on DioError catch (e) {
-//      return resultError(e);
+      return ResultData(null, false, -10, null);
     }
 
     if (response.data is DioError) {
-      Fluttertoast.showToast(msg: "出错了");
-//      return resultError(response.data['code']);
+      return ResultData(null, false, -10, null);
+
     }
 
     if (response == null) {
-      Fluttertoast.showToast(msg: "出错了");
-//      return resultError(response.data['code']);
+      return ResultData(null, false, -10, null);
     }
 
     return response.data;
   }
-
 
   ///通用的PUT请求
   put(url, params, {noTip = false}) async {
@@ -103,5 +108,4 @@ class HttpManager{
 
     return response.data;
   }
-
 }
