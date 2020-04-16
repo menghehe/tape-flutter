@@ -17,6 +17,7 @@ class Clip extends Base{
   int shareCount;
   int collectCount;
   bool liked;
+  int rank;
 
 
   Clip();
@@ -28,5 +29,6 @@ class Clip extends Base{
 class ClipPage extends BasePage{
   List<Clip> records;
 }
+
 
 

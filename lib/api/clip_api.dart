@@ -24,4 +24,8 @@ class ClipApi{
   static showClip(String id){
     return HttpManager.getInstance().get("/api/clip/show/"+id,null);
   }
+
+  static hotClip(){
+    return HttpManager.getInstance().get("/api/clip/hot/",null);
+  }
 }

@@ -52,7 +52,7 @@ Widget buildView(
             title: InkWell(
               child: like.likeType == 1?Text('给你的视频点了赞'):Text('给你的评论点了赞'),
               onTap: () {
-                dispatch(LikeActionCreator.onTapContent(like));
+//                dispatch(LikeActionCreator.onTapContent(like));
               },
             ),
             trailing: Text(

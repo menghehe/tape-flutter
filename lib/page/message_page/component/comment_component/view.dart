@@ -52,7 +52,7 @@ Widget buildView(
             title: InkWell(
               child: Text(comment.text),
               onTap: () {
-                dispatch(CommentActionCreator.onTapComment(comment));
+//                dispatch(CommentActionCreator.onTapComment(comment));
               },
             ),
             trailing: Text(

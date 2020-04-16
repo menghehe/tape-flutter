@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tape/api/request/ResultData.dart';
+import 'package:tape/utils/storage.dart';
 
 class ResponseInterceptors extends InterceptorsWrapper  {
 
@@ -29,8 +30,7 @@ class RequestInterceptors extends InterceptorsWrapper{
 
   @override
   Future onRequest(RequestOptions options) async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    var token = sharedPreferences.getString("token");
+    var token = await Storage.getString("token");
     var header ={"Authorization":token};
     options.headers.addAll(header);
     return super.onRequest(options);

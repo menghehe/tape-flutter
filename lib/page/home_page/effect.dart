@@ -10,15 +10,30 @@ import 'state.dart';
 Effect<HomeState> buildEffect() {
   return combineEffects(<Object, Effect<HomeState>>{
     Lifecycle.initState:_init,
+    HomeAction.dropDownChange:_dropDownChange,
     HomeAction.fetchRecommend: _fetchRecommend,
     HomeAction.refresh:_refresh,
-    HomeAction.loadMore:_loadMore
+    HomeAction.loadMore:_loadMore,
+    HomeAction.fetchHot:_fetchHot,
 
   });
 }
 void _init(Action action, Context<HomeState> ctx) {
   ctx.dispatch(HomeActionCreator.fetchRecommend());
 }
+
+void _dropDownChange(Action action, Context<HomeState> ctx) {
+  ctx.dispatch(HomeActionCreator.dropDownValue(action.payload));
+  if(action.payload == "推荐"){
+    ctx.dispatch(HomeActionCreator.fetchRecommend());
+  }
+
+  if(action.payload == "热门"){
+    ctx.dispatch(HomeActionCreator.fetchHot());
+  }
+}
+
+
 
 void _fetchRecommend(Action action, Context<HomeState> ctx) {
   Future<dynamic> data =  ClipApi.listClip(ctx.state.clipParam);
@@ -70,4 +85,24 @@ void _loadMore(Action action,Context<HomeState> ctx){
     }
   });
 }
+
+void _fetchHot(Action action, Context<HomeState> ctx) {
+  Future future = ClipApi.hotClip();
+  int rank = 1;
+  future.then((result){
+    if(result.isSuccess){
+      List<Clip> clipList = List();
+      for(var item in result.data){
+        Clip clip = JsonMapper.fromMap(item);
+        clip.rank = rank;
+        rank++;
+        clipList.add(clip);
+      }
+      ctx.dispatch(HomeActionCreator.fetchHotSuccess(clipList));
+    }else{
+      ctx.dispatch(HomeActionCreator.fetchFailure());
+    }
+  });
+}
+
 

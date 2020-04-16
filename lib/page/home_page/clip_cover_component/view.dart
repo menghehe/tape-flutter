@@ -40,11 +40,24 @@ Widget buildView(
                         Address.BASE_AVATAR_URL + state.clip.user.avatar),
                   ),
                   contentPadding: EdgeInsets.all(0),
-                  title: Text(
-                    state.clip.user.username,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
+                  title: Row(
+                    children: <Widget>[
+                      Text(
+                        state.clip.user.username,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(width: 10,),
+                      Text(
+                        state.clip.rank!=null? '排名'+state.clip.rank.toString():'',
+                        style: TextStyle(
+                          fontWeight: FontWeight.w300,
+                          fontSize: 13,
+                          fontStyle: FontStyle.italic
+                        ),
+                      ),
+                    ],
                   ),
                   trailing: Text(
                     TimelineUtil.format(

@@ -7,17 +7,18 @@ import 'Address.dart';
 import 'Interceptors.dart';
 
 class HttpManager {
+  //单例的HttpManager
   static HttpManager _instance = HttpManager._internal();
-
   Dio _dio;
-
   factory HttpManager() => _instance;
-
   HttpManager._internal({String baseUrl}) {
     if (null == _dio) {
       _dio = new Dio(new BaseOptions(baseUrl: "", connectTimeout: 3000));
+      //请求拦截器
       _dio.interceptors.add(new RequestInterceptors());
+      //结果拦截器
       _dio.interceptors.add(new ResponseInterceptors());
+      //log拦截器
       _dio.interceptors.add(PrettyDioLogger(
           requestHeader: true,
           requestBody: true,
@@ -83,27 +84,10 @@ class HttpManager {
 
     if (response.data is DioError) {
       return ResultData(null, false, -10, null);
-
     }
 
     if (response == null) {
       return ResultData(null, false, -10, null);
-    }
-
-    return response.data;
-  }
-
-  ///通用的PUT请求
-  put(url, params, {noTip = false}) async {
-    Response response;
-    try {
-      response = await _dio.put(url, queryParameters: params);
-    } on DioError catch (e) {
-//      return resultError(e);
-    }
-
-    if (response.data is DioError) {
-//      return resultError(response.data['code']);
     }
 
     return response.data;

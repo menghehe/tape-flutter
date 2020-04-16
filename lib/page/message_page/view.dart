@@ -1,7 +1,6 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
 import 'package:shifting_tabbar/shifting_tabbar.dart';
-import 'package:tape/customer_widgets/keepalive_widget.dart';
 import 'package:tape/utils/adapt.dart';
 
 import 'state.dart';

@@ -13,63 +13,70 @@ import 'state.dart';
 
 Widget buildView(
     CreationState state, Dispatch dispatch, ViewService viewService) {
-  SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top, SystemUiOverlay.bottom]);
+  SystemChrome.setEnabledSystemUIOverlays(
+      [SystemUiOverlay.top, SystemUiOverlay.bottom]);
   Widget _previewVideo() {
-     if (state.videoFile==null||state.videoPlayerController.value.initialized==false) {
-       return const Text(
-         '从相册选择或拍摄',
-         textAlign: TextAlign.center,
-       );
-     }
-     return  Chewie(
+    if (state.videoFile == null ||
+        state.videoPlayerController.value.initialized == false) {
+      return const Text(
+        '从相册选择或拍摄',
+        textAlign: TextAlign.center,
+      );
+    }
+    return Chewie(
       controller: state.chewieController,
-     );
-   }
+    );
+  }
 
-    return Scaffold(
-
-      appBar: PreferredSize(
-          child: AppBar(
-            title: Text('创作',style: TextStyle(color: Colors.black),),
-            automaticallyImplyLeading: false,
-            backgroundColor: Colors.white,
-            actions: <Widget>[
-              FlatButton(
-                textColor: Colors.black,
-                onPressed:()=> dispatch(CreationActionCreator.onPostClip()),
-                child: Icon(Icons.send),
-                shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
-              ),
-            ],
+  return Scaffold(
+    appBar: PreferredSize(
+        child: AppBar(
+          title: Text(
+            '创作',
+            style: TextStyle(
+              color: Colors.black87,
+              fontStyle: FontStyle.normal,
+              fontSize: 18,
+              fontWeight: FontWeight.w100
+            ),
           ),
-          preferredSize: Size.fromHeight(Adapt.screenH() * 0.07)
-      ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(10),
-        child: Column(
-          children: <Widget>[
-            TextField(
-              controller: state.titleEditingController,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                filled: true,
-                fillColor: Colors.green.withAlpha(30),
-                hintText: '标题',
-              ),
+          automaticallyImplyLeading: false,
+          backgroundColor: Colors.white,
+          actions: <Widget>[
+            FlatButton(
+              textColor: Colors.black,
+              onPressed: () => dispatch(CreationActionCreator.onPostClip()),
+              child: Icon(Icons.send),
+              shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
             ),
-            SizedBox(
-              height: 20,
-            ),
-            Padding(
-              padding: EdgeInsets.only(bottom: 30),
-              child: _previewVideo(),
-            )
           ],
         ),
+        preferredSize: Size.fromHeight(Adapt.screenH() * 0.07)),
+    body: SingleChildScrollView(
+      padding: EdgeInsets.all(10),
+      child: Column(
+        children: <Widget>[
+          TextField(
+            controller: state.titleEditingController,
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              filled: true,
+              fillColor: Colors.green.withAlpha(30),
+              hintText: '标题',
+            ),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Padding(
+            padding: EdgeInsets.only(bottom: 30),
+            child: _previewVideo(),
+          )
+        ],
       ),
+    ),
     floatingActionButton: _buildSpeedDial(state, dispatch),
   );
-
 }
 
 Widget _buildSpeedDial(CreationState state, Dispatch dispatch) {
@@ -100,19 +107,21 @@ Widget _buildSpeedDial(CreationState state, Dispatch dispatch) {
       shape: CircleBorder(),
       children: [
         SpeedDialChild(
-            child: Icon(Icons.video_library),
-            backgroundColor: Colors.red,
-            onTap: (){
-              dispatch(CreationActionCreator.onRemovePreview());
-              dispatch(CreationActionCreator.onImageButtonPressed(ImageSource.gallery));
-            },
+          child: Icon(Icons.video_library),
+          backgroundColor: Colors.red,
+          onTap: () {
+            dispatch(CreationActionCreator.onRemovePreview());
+            dispatch(CreationActionCreator.onImageButtonPressed(
+                ImageSource.gallery));
+          },
         ),
         SpeedDialChild(
           child: Icon(Icons.videocam),
           backgroundColor: Colors.blue,
-          onTap: (){
+          onTap: () {
             dispatch(CreationActionCreator.onRemovePreview());
-            dispatch(CreationActionCreator.onImageButtonPressed(ImageSource.camera));
+            dispatch(
+                CreationActionCreator.onImageButtonPressed(ImageSource.camera));
           },
         ),
         SpeedDialChild(
@@ -124,5 +133,3 @@ Widget _buildSpeedDial(CreationState state, Dispatch dispatch) {
     ),
   );
 }
-
-

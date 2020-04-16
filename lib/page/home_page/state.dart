@@ -4,25 +4,23 @@ import 'package:tape/models/base.dart';
 import 'package:tape/models/clip.dart';
 import 'package:tape/page/home_page/clip_cover_component/state.dart';
 
-class HomeState implements Cloneable<HomeState> ,MutableSource{
-
+class HomeState implements Cloneable<HomeState>, MutableSource {
   @override
   HomeState clone() {
     return HomeState()
-    ..refreshController = refreshController
-    ..clipCoverStateList =clipCoverStateList
-    ..clipParam = clipParam
-    ..mark = mark;
+      ..refreshController = refreshController
+      ..clipCoverStateList = clipCoverStateList
+      ..clipParam = clipParam
+      ..dropdownValue = dropdownValue;
   }
-
 
   List<ClipCoverState> clipCoverStateList;
   Clip clipParam;
-  int mark = 0;
+  String dropdownValue = "推荐";
 
   @override
   int get itemCount {
-    return clipCoverStateList?.length ??0;
+    return clipCoverStateList?.length ?? 0;
   }
 
   @override
@@ -46,10 +44,7 @@ class HomeState implements Cloneable<HomeState> ,MutableSource{
     return null;
   }
 
-
   RefreshController refreshController;
-
-
 }
 
 HomeState initState(Map<String, dynamic> args) {
@@ -59,8 +54,6 @@ HomeState initState(Map<String, dynamic> args) {
   clipParam.current = 1;
   clipParam.size = 4;
   return HomeState()
-      ..refreshController = new RefreshController()
-      ..clipParam = clipParam;
+    ..refreshController = new RefreshController()
+    ..clipParam = clipParam;
 }
-
-
