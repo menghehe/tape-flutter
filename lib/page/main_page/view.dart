@@ -1,7 +1,6 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
-import 'package:tape/customer_widgets/keepalive_widget.dart';
 import 'package:tape/page/main_page/action.dart';
 import 'package:tape/utils/adapt.dart';
 
@@ -13,7 +12,7 @@ Widget buildView(MainState state, Dispatch dispatch, ViewService viewService) {
       Adapt.initContext(context);
       ScreenUtil.getInstance();
       Widget _buildPage(Widget page) {
-        return KeepAliveWidget(page);
+        return keepAliveClientWrapper(page);
       }
 
       return Scaffold(

@@ -1,6 +1,8 @@
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:tape/api/request/Address.dart';
 import 'package:tape/page/home_page/clip_cover_component/action.dart';
 import 'package:tape/utils/adapt.dart';
@@ -25,15 +27,18 @@ Widget buildView(
                       fit: BoxFit.cover,
                       child: FadeInImage.assetNetwork(
                           placeholder: 'assets/images/CacheBG.jpg',
-                          image: Address.BASE_COVER_URL + state.clip.coverPath)),
+                          image:
+                              Address.BASE_COVER_URL + state.clip.coverPath)),
                 ),
               ),
               onTap: () => {dispatch(ClipCoverActionCreator.tapPlayer())},
             ),
             InkWell(
-              onTap: (){dispatch(ClipCoverActionCreator.tapUserAvatar());},
+              onTap: () {
+                dispatch(ClipCoverActionCreator.tapUserAvatar());
+              },
               child: Padding(
-                padding: EdgeInsets.only(left: 5,right: 5),
+                padding: EdgeInsets.only(left: 5, right: 5),
                 child: ListTile(
                   leading: CircleAvatar(
                     backgroundImage: NetworkImage(
@@ -48,22 +53,39 @@ Widget buildView(
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(width: 10,),
-                      Text(
-                        state.clip.rank!=null? '排名'+state.clip.rank.toString():'',
-                        style: TextStyle(
-                          fontWeight: FontWeight.w300,
-                          fontSize: 13,
-                          fontStyle: FontStyle.italic
-                        ),
+                      SizedBox(
+                        width: 10,
                       ),
+                      Text(
+                        state.clip.rank != null
+                            ? '排名 ' + state.clip.rank.toString()
+                            : '',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w300,
+                            fontSize: 13,
+                            fontStyle: FontStyle.italic),
+                      ),
+                      Text(
+                        '评论 ' + state.clip.commentCount.toString(),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w300,
+                            fontSize: 13,
+                            fontStyle: FontStyle.italic),
+                      ),
+                      Text(
+                        '点赞 ' + state.clip.commentCount.toString(),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w300,
+                            fontSize: 13,
+                            fontStyle: FontStyle.italic),
+                      )
                     ],
                   ),
                   trailing: Text(
                     TimelineUtil.format(
                       state.clip.createTime.millisecondsSinceEpoch,
                       locTimeMillis:
-                      DateTime.now().toLocal().millisecondsSinceEpoch,
+                          DateTime.now().toLocal().millisecondsSinceEpoch,
                     ),
                     style: TextStyle(
                       fontWeight: FontWeight.w300,

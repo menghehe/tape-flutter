@@ -9,8 +9,8 @@ import 'state.dart';
 Widget buildView(HomeState state, Dispatch dispatch, ViewService viewService) {
   final ListAdapter adapter = viewService.buildAdapter();
 
-  Widget _buildList(){
-    if(state.dropdownValue == '热门'){
+  Widget _buildList() {
+    if (state.dropdownValue == '热门') {
       return ListView.builder(
         itemBuilder: adapter.itemBuilder,
         itemCount: adapter.itemCount,
@@ -52,7 +52,9 @@ Widget buildView(HomeState state, Dispatch dispatch, ViewService viewService) {
                     DropdownMenuItem(child: Text('推荐'), value: '推荐'),
                     DropdownMenuItem(child: Text('热门'), value: '热门'),
                   ],
-                  onChanged: (String value) { dispatch(HomeActionCreator.dropDownChange(value));},
+                  onChanged: (String value) {
+                    dispatch(HomeActionCreator.dropDownChange(value));
+                  },
                 ),
               ],
             ),

@@ -3,6 +3,7 @@ import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart' hide Action;
 import 'package:tape/api/clip_api.dart';
 import 'package:tape/api/user_api.dart';
+import 'package:tape/models/base.dart';
 import 'package:tape/models/clip.dart';
 import 'package:tape/utils/storage.dart';
 import '../../app.dart';
@@ -43,6 +44,9 @@ void _fetchUserInfo(Action action, Context<MineState> ctx) {
 void _onFetchUserClip(Action action, Context<MineState> ctx) {
   Clip clip = Clip();
   clip.creator = ctx.state.user.id;
+  clip.orders = [OrderItem("create_time", false)];
+  clip.size = 500;
+  clip.current = 1;
   Future future = ClipApi.listClip(clip);
   future.then((result) {
     if (result.isSuccess) {

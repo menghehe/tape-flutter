@@ -70,14 +70,11 @@ Future<bool> _refresh(Action action, Context<HomeState> ctx) {
 
 void _loadMore(Action action,Context<HomeState> ctx){
   Clip clipParam = ctx.state.clipParam;
-  OrderItem orderItem = OrderItem("create_time", false);
-  clipParam.orders = [orderItem];
+  clipParam.orders = [OrderItem("create_time", false)];
   clipParam.current = clipParam.current+1;
-
   ctx.state.clipParam = clipParam;
-  Future<dynamic> data =  ClipApi.listClip(clipParam);
-  println(data);
-  data.then((result){
+  Future<dynamic> future =  ClipApi.listClip(clipParam);
+  future.then((result){
     if(result.isSuccess){
       ctx.dispatch(HomeActionCreator.loadSuccess(JsonMapper.fromMap(result.data)));
     }else{

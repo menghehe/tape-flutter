@@ -26,7 +26,7 @@ Widget buildView(
           ),
         ),
         color: Colors.green,
-        onPressed: () {},
+        onPressed: () {dispatch(ProfileActionCreator.onTapFriendShip());},
       );
     }
 
@@ -39,7 +39,7 @@ Widget buildView(
           ),
         ),
         color: Colors.red,
-        onPressed: () {},
+        onPressed: () {dispatch(ProfileActionCreator.onTapFriendShip());},
       );
     }
 
@@ -65,7 +65,7 @@ Widget buildView(
           ),
         ),
         color: Colors.green,
-        onPressed: () {},
+        onPressed: () {dispatch(ProfileActionCreator.onTapFriendShip());},
       );
     }
 
