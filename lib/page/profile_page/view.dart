@@ -26,7 +26,9 @@ Widget buildView(
           ),
         ),
         color: Colors.green,
-        onPressed: () {dispatch(ProfileActionCreator.onTapFriendShip());},
+        onPressed: () {
+          dispatch(ProfileActionCreator.onTapFriendShip());
+        },
       );
     }
 
@@ -39,7 +41,9 @@ Widget buildView(
           ),
         ),
         color: Colors.red,
-        onPressed: () {dispatch(ProfileActionCreator.onTapFriendShip());},
+        onPressed: () {
+          dispatch(ProfileActionCreator.onTapFriendShip());
+        },
       );
     }
 
@@ -65,7 +69,9 @@ Widget buildView(
           ),
         ),
         color: Colors.green,
-        onPressed: () {dispatch(ProfileActionCreator.onTapFriendShip());},
+        onPressed: () {
+          dispatch(ProfileActionCreator.onTapFriendShip());
+        },
       );
     }
 
@@ -81,10 +87,12 @@ Widget buildView(
     );
   }
 
-  Widget _buildMessageBox(){
-    if(state.profileUser.friendShipStatus==-1){
-      return SizedBox(height: 0,);
-    }else{
+  Widget _buildMessageBox() {
+    if (state.profileUser.friendShipStatus == -1) {
+      return SizedBox(
+        height: 0,
+      );
+    } else {
       return Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
@@ -102,7 +110,6 @@ Widget buildView(
       );
     }
   }
-
 
   return Scaffold(
     body: NestedScrollView(
