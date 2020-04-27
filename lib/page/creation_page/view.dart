@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:neeko/neeko.dart';
 import 'package:tape/page/creation_page/action.dart';
 import 'package:tape/utils/adapt.dart';
-import 'package:video_player/video_player.dart';
 
 import 'state.dart';
 
@@ -16,15 +16,14 @@ Widget buildView(
   SystemChrome.setEnabledSystemUIOverlays(
       [SystemUiOverlay.top, SystemUiOverlay.bottom]);
   Widget _previewVideo() {
-    if (state.videoFile == null ||
-        state.videoPlayerController.value.initialized == false) {
+    if (state.videoFile == null) {
       return const Text(
         '从相册选择或拍摄',
         textAlign: TextAlign.center,
       );
     }
-    return Chewie(
-      controller: state.chewieController,
+    return NeekoPlayerWidget(
+      videoControllerWrapper: state.videoControllerWrapper,
     );
   }
 
@@ -44,7 +43,7 @@ Widget buildView(
           backgroundColor: Colors.white,
           actions: <Widget>[
             FlatButton(
-              textColor: Colors.black,
+              textColor: Colors.black54,
               onPressed: () => dispatch(CreationActionCreator.onPostClip()),
               child: Icon(Icons.send),
               shape: CircleBorder(side: BorderSide(color: Colors.transparent)),

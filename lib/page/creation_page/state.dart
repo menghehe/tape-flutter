@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:chewie/chewie.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart';
+import 'package:neeko/neeko.dart';
 import 'package:progress_dialog/progress_dialog.dart';
-import 'package:video_player/video_player.dart';
 
 class CreationState implements Cloneable<CreationState> {
 
@@ -13,13 +13,11 @@ class CreationState implements Cloneable<CreationState> {
     return CreationState()
         ..videoFile = videoFile
         ..progressDialog = progressDialog
-        ..chewieController = chewieController
-        ..videoPlayerController = videoPlayerController
-        ..titleEditingController = titleEditingController;
+        ..titleEditingController = titleEditingController
+        ..videoControllerWrapper = videoControllerWrapper;
   }
 
-  ChewieController chewieController;
-  VideoPlayerController videoPlayerController;
+  VideoControllerWrapper videoControllerWrapper;
   File videoFile;
 
   TextEditingController titleEditingController;

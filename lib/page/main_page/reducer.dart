@@ -21,8 +21,6 @@ MainState _onAction(MainState state, Action action) {
 MainState _onPressTab(MainState state,Action action){
   final MainState newState = state.clone();
   newState.selectedIndex = action.payload;
-//  state.controller.animateToPage(action.payload,
-////      duration: Duration(milliseconds: 300), curve: Curves.ease);
   state.controller.jumpToPage(action.payload);
   return newState;
 }

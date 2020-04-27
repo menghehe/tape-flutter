@@ -1,5 +1,6 @@
 import 'package:dart_json_mapper/dart_json_mapper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:tape/app.dart';
 import 'package:tape/utils/storage.dart';
 
@@ -24,9 +25,17 @@ void main() {
   Future<String> future = Storage.getString("token");
   future.then((token){
     if(token==null){
-      runApp(createApp("auth"));
+      runApp(Phoenix(
+        child: createApp("auth"),
+      ));
     }else{
-      runApp(createApp("main"));
+      runApp(Phoenix(
+        child: createApp("main"),
+      ));
     }
   });
+}
+
+void restart(){
+  main();
 }

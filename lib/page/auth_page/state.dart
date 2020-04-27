@@ -6,10 +6,12 @@ class AuthState implements Cloneable<AuthState> {
   @override
   AuthState clone() {
     return AuthState()
-        ..pageList = pageList;
+        ..pageList = pageList
+        ..token = token;
   }
 
   List<Widget> pageList;
+  String token;
 
 }
 

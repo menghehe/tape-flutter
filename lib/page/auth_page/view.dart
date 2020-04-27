@@ -11,7 +11,7 @@ Widget buildView(AuthState state, Dispatch dispatch, ViewService viewService) {
     Future future = UserApi.login(loginData.name, loginData.password);
     return future.then((result) {
       if (result.isSuccess) {
-        dispatch(AuthActionCreator.onLoginSuccess(result.data['token']));
+        state.token = result.data['token'];
         return null;
       } else {
         return result.message;
@@ -31,9 +31,9 @@ Widget buildView(AuthState state, Dispatch dispatch, ViewService viewService) {
     });
   }
 
+
   return FlutterLogin(
     title: "Tape",
-    logo: 'assets/images/ecorp.png',
     messages: LoginMessages(
       usernameHint: '用户名',
       passwordHint: '密码',
@@ -44,10 +44,13 @@ Widget buildView(AuthState state, Dispatch dispatch, ViewService viewService) {
       recoverPasswordButton: '找回密码',
       goBackButton: '返回',
       confirmPasswordError: '两次密码不一致',
-      recoverPasswordIntro: 'Don\'t feel bad. Happens all the time.',
+      recoverPasswordIntro: '功能未开发',
       recoverPasswordDescription:
-          'Lorem Ipsum is simply dummy text of the printing and typesetting industry',
-      recoverPasswordSuccess: 'Password rescued successfully',
+          '功能未开发',
+      recoverPasswordSuccess: '密码重置成功',
+    ),
+    theme: LoginTheme(
+      primaryColor: Colors.green,
     ),
     emailValidator: (value) {
       if (value.length < 4) {
@@ -76,7 +79,11 @@ Widget buildView(AuthState state, Dispatch dispatch, ViewService viewService) {
       });
     },
     onSubmitAnimationCompleted: () {
-//      dispatch(AuthActionCreator.onComplete());
+      if(state.token==null){
+
+      }else{
+        dispatch(AuthActionCreator.onLoginSuccess(state.token));
+      }
     },
     showDebugButtons: false,
   );

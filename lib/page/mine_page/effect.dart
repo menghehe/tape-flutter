@@ -1,13 +1,12 @@
 import 'package:dart_json_mapper/dart_json_mapper.dart';
 import 'package:fish_redux/fish_redux.dart';
 import 'package:flutter/material.dart' hide Action;
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:tape/api/clip_api.dart';
 import 'package:tape/api/user_api.dart';
 import 'package:tape/models/base.dart';
 import 'package:tape/models/clip.dart';
 import 'package:tape/utils/storage.dart';
-import '../../app.dart';
-import '../../main.reflectable.dart';
 import 'action.dart';
 import 'state.dart';
 
@@ -80,16 +79,13 @@ void _onLogout(Action action, Context<MineState> ctx) {
       actions: <Widget>[
         new FlatButton(
             onPressed: () {
-              Navigator.pop(ctx.context, 'Cancel');
+              Navigator.pop(ctx.context);
             },
             child: const Text('取消')),
         new FlatButton(
           onPressed: () {
             Storage.remove("token");
-            Navigator.pop(ctx.context, 'Cancel');
-            WidgetsFlutterBinding.ensureInitialized();
-            initializeReflectable();
-            runApp(createApp("login"));
+            Phoenix.rebirth(ctx.context);
           },
           child: const Text('确定'),
         ),

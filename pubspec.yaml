@@ -42,6 +42,10 @@ dependencies:
   pretty_dio_logger: 1.1.1
   shifting_tabbar: ^0.3.1
   loading_animations: ^2.1.0
+  flutter_phoenix: ^0.1.0
+  neeko: ^0.0.6
+
+
 
   dart_json_mapper: ^1.5.6
   reflectable: any

@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tape/api/request/ResultData.dart';
 import 'package:tape/utils/storage.dart';
 

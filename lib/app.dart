@@ -48,12 +48,11 @@ Widget createApp(String firstPae) {
       );
     },
   );
-  final ThemeData _lightTheme = ThemeData.light();
-  final ThemeData _darkTheme = ThemeData.dark();
   return MaterialApp(
     title: 'Tape',
-    theme: _lightTheme,
-    darkTheme: _darkTheme,
+    theme: ThemeData(
+      accentColor: Colors.green
+    ),
     debugShowCheckedModeBanner: false,
     home: routes.buildPage(firstPae, {
       'pageList':[

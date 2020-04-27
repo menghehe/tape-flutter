@@ -16,8 +16,8 @@ class CreationActionCreator {
     return Action(CreationAction.imageButtonPressed,payload: imageSource);
   }
 
-  static Action onPickComplete(VideoPlayerController videoPlayerController){
-    return Action(CreationAction.pickComplete,payload: videoPlayerController);
+  static Action onPickComplete(File videoFile){
+    return Action(CreationAction.pickComplete,payload: videoFile);
   }
 
   static Action onVideoSelected(File videoFile){
