@@ -35,7 +35,3 @@ void main() {
     }
   });
 }
-
-void restart(){
-  main();
-}

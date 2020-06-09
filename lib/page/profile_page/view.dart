@@ -56,7 +56,9 @@ Widget buildView(
           ),
         ),
         color: Colors.green,
-        onPressed: () {},
+        onPressed: () {
+          dispatch(ProfileActionCreator.onTapFriendShip());
+        },
       );
     }
 
@@ -238,10 +240,8 @@ Widget _buildClipList(ProfileState state, dispatch) {
               Address.BASE_COVER_URL + state.clipList[index].coverPath,
               fit: BoxFit.cover,
             ),
-            onTap: () {
-              dispatch(
-                  ProfileActionCreator.onTapClipCover(state.clipList[index]));
-            },
+            onTap: () => dispatch(
+                ProfileActionCreator.onTapClipCover(state.clipList[index])),
           ));
     },
     staggeredTileBuilder: (int index) =>

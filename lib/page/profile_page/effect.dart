@@ -69,15 +69,15 @@ void _onTapClipCover(Action action, Context<ProfileState> ctx){
 
 
 void _onTapFriendShip(Action action, Context<ProfileState> ctx){
-  if(ctx.state.profileUser.friendShipStatus==0){
-    Future future = FriendApi.createFollow(ctx.state.profileUser.id);
+  if(ctx.state.profileUser.friendShipStatus==1||ctx.state.profileUser.friendShipStatus==3){
+    Future future = FriendApi.destroyFollow(ctx.state.profileUser.id);
     future.then((result){
       if(result.isSuccess){
         ctx.dispatch(ProfileActionCreator.fetchUserInfo());
       }
     });
   }else{
-    Future future = FriendApi.destroyFollow(ctx.state.profileUser.id);
+    Future future = FriendApi.createFollow(ctx.state.profileUser.id);
     future.then((result){
       if(result.isSuccess){
         ctx.dispatch(ProfileActionCreator.fetchUserInfo());

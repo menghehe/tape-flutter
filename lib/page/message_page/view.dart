@@ -14,13 +14,9 @@ Widget buildView(
         child: ShiftingTabBar(
           labelStyle: TextStyle(color: Colors.green),
           controller: state.tabController,
-          // Specify a color to background or it will pick it from primaryColor of your app ThemeData
           color: Colors.white,
-          // You can change brightness manually to change text color style to dark and light or
-          // it will decide based on your background color
           brightness: Brightness.light,
           tabs: [
-            // Also you should use ShiftingTab widget instead of Tab widget to get shifting animation
             ShiftingTab(
               icon: Icon(Icons.comment),
               text: "评论",

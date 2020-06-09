@@ -2,6 +2,7 @@
 
 A new Flutter application.
 服务端：https://github.com/SHIELD7/tape
+android demo 下载：http://fir.imcu.site/dkpx
 
 ## Getting Started
 

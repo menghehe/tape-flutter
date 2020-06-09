@@ -31,12 +31,11 @@ Widget buildView(AuthState state, Dispatch dispatch, ViewService viewService) {
     });
   }
 
-
   return FlutterLogin(
     title: "Tape",
     messages: LoginMessages(
-      usernameHint: '用户名',
-      passwordHint: '密码',
+      usernameHint: '用户名->menghe',
+      passwordHint: '密码->123456',
       confirmPasswordHint: '确认密码',
       loginButton: '登录',
       signupButton: '注册',
@@ -45,8 +44,7 @@ Widget buildView(AuthState state, Dispatch dispatch, ViewService viewService) {
       goBackButton: '返回',
       confirmPasswordError: '两次密码不一致',
       recoverPasswordIntro: '功能未开发',
-      recoverPasswordDescription:
-          '功能未开发',
+      recoverPasswordDescription: '功能未开发',
       recoverPasswordSuccess: '密码重置成功',
     ),
     theme: LoginTheme(
@@ -79,9 +77,8 @@ Widget buildView(AuthState state, Dispatch dispatch, ViewService viewService) {
       });
     },
     onSubmitAnimationCompleted: () {
-      if(state.token==null){
-
-      }else{
+      if (state.token == null) {
+      } else {
         dispatch(AuthActionCreator.onLoginSuccess(state.token));
       }
     },

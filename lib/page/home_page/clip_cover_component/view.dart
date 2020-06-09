@@ -73,7 +73,7 @@ Widget buildView(
                             fontStyle: FontStyle.italic),
                       ),
                       Text(
-                        '点赞 ' + state.clip.commentCount.toString(),
+                        '点赞 ' + state.clip.likeCount.toString(),
                         style: TextStyle(
                             fontWeight: FontWeight.w300,
                             fontSize: 13,
